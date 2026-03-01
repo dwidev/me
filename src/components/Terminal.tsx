@@ -24,13 +24,29 @@ export default function Terminal() {
     const [showWelcome, setShowWelcome] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [gameMode, setGameMode] = useState<string | null>(null);
+    const [isStreaming, setIsStreaming] = useState(false);
 
     // Auto-scroll to bottom
     useEffect(() => {
-        if (scrollRef.current && !gameMode) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        const scrollToBottom = () => {
+            if (scrollRef.current && !gameMode) {
+                scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            }
+        };
+
+        // Scroll immediately on any state change
+        scrollToBottom();
+
+        // While streaming, continuously scroll to keep up with the expanding text
+        let interval: ReturnType<typeof setInterval>;
+        if (isStreaming) {
+            interval = setInterval(scrollToBottom, 30);
         }
-    }, [history, isBooting, showWelcome, gameMode]);
+
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [history, isBooting, showWelcome, gameMode, isStreaming]);
 
     const handleBootComplete = useCallback(() => {
         finishBoot();
@@ -40,11 +56,21 @@ export default function Terminal() {
     const handleCommand = useCallback(
         (input: string) => {
             const cmd = input.trim().toLowerCase();
+            if (!cmd) return;
+
             // Intercept game commands
             if (cmd === "snake") {
                 setGameMode("snake");
                 return;
             }
+
+            // 'clear' command doesn't generate output stream, just clears history
+            if (cmd === "clear") {
+                processCommand(input);
+                return;
+            }
+
+            setIsStreaming(true);
             processCommand(input);
         },
         [processCommand]
@@ -52,9 +78,10 @@ export default function Terminal() {
 
     const handleShortcut = useCallback(
         (command: string) => {
+            if (isStreaming) return;
             handleCommand(command);
         },
-        [handleCommand]
+        [handleCommand, isStreaming]
     );
 
     const handleBodyClick = useCallback(() => {
@@ -106,8 +133,8 @@ export default function Terminal() {
                         layout: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
                     }}
                     className={`terminal-window overflow-hidden flex flex-col ${isFullscreen
-                            ? "rounded-none border-0 h-screen"
-                            : "rounded-xl border border-white/[0.06]"
+                        ? "rounded-none border-0 h-screen"
+                        : "rounded-xl border border-white/[0.06]"
                         }`}
                     style={!isFullscreen ? { height: "80vh" } : undefined}
                 >
@@ -151,9 +178,12 @@ export default function Terminal() {
                                             <button
                                                 key={s.key}
                                                 onClick={() => handleShortcut(s.command)}
-                                                className="px-3 py-1.5 text-xs font-mono border border-accent/20 rounded-md
-                             text-accent hover:bg-accent/10 hover:border-accent/40
-                             transition-all duration-200 active:scale-95 cursor-pointer"
+                                                disabled={isStreaming}
+                                                className={`px-3 py-1.5 text-xs font-mono border border-accent/20 rounded-md
+                                                 text-accent transition-all duration-200 ${isStreaming
+                                                        ? "opacity-40 cursor-not-allowed"
+                                                        : "hover:bg-accent/10 hover:border-accent/40 active:scale-95 cursor-pointer"
+                                                    }`}
                                             >
                                                 <span className="text-green">[{s.key}]</span>{" "}
                                                 <span>{s.label}</span>
@@ -165,8 +195,13 @@ export default function Terminal() {
 
                                     {/* Command history */}
                                     <div className="space-y-3">
-                                        {history.map((entry) => (
-                                            <CommandOutput key={entry.id} entry={entry} />
+                                        {history.map((entry, index) => (
+                                            <CommandOutput
+                                                key={entry.id}
+                                                entry={entry}
+                                                isLatest={index === history.length - 1}
+                                                onStreamComplete={() => setIsStreaming(false)}
+                                            />
                                         ))}
                                     </div>
 
@@ -175,7 +210,7 @@ export default function Terminal() {
                                         <CommandLine
                                             onSubmit={handleCommand}
                                             onNavigate={navigateHistory}
-                                            disabled={false}
+                                            disabled={isStreaming}
                                         />
                                     </div>
                                 </>
