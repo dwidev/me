@@ -11,6 +11,7 @@ import SnakeGame from "./SnakeGame";
 import ThemeSelector from "./ThemeSelector";
 import MoreSelector from "./MoreSelector";
 import LanguageSelector from "./LanguageSelector";
+import ContactForm from "./ContactForm";
 import { useTerminal } from "@/hooks/useTerminal";
 
 const shortcuts = [
@@ -31,6 +32,7 @@ export default function Terminal() {
     const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
     const [isMoreSelectorOpen, setIsMoreSelectorOpen] = useState(false);
     const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
+    const [isContactFormOpen, setIsContactFormOpen] = useState(false);
     const [showMoreMenu, setShowMoreMenu] = useState(false);
 
     // Auto-scroll to bottom
@@ -86,6 +88,12 @@ export default function Terminal() {
             // Intercept more options menu
             if (cmd === "more") {
                 setIsMoreSelectorOpen(true);
+                return;
+            }
+
+            // Intercept contact form
+            if (cmd === "contact") {
+                setIsContactFormOpen(true);
                 return;
             }
 
@@ -299,6 +307,15 @@ export default function Terminal() {
                                                 }}
                                                 onCancel={() => {
                                                     setIsMoreSelectorOpen(false);
+                                                }}
+                                            />
+                                        ) : isContactFormOpen ? (
+                                            <ContactForm
+                                                onSubmit={() => {
+                                                    setIsContactFormOpen(false);
+                                                }}
+                                                onCancel={() => {
+                                                    setIsContactFormOpen(false);
                                                 }}
                                             />
                                         ) : (

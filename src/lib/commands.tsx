@@ -13,6 +13,7 @@ function HelpOutput() {
         { cmd: "projects", desc: "View my projects" },
         { cmd: "ls", desc: "Alias for projects" },
         { cmd: "socials", desc: "Find me online" },
+        { cmd: "contact", desc: "Send me a message" },
         { cmd: "more", desc: "Show more options" },
         { cmd: "clear", desc: "Clear the terminal" },
     ];
@@ -331,6 +332,10 @@ export const commandRegistry: Record<string, CommandHandler> = {
     more: {
         description: "Show more options",
         handler: () => null, // Intercepted by Terminal for interactive menu
+    },
+    contact: {
+        description: "Send me a message",
+        handler: () => null, // Intercepted by Terminal for contact form
     },
     clear: {
         description: "Clear the terminal",
