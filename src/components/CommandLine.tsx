@@ -55,8 +55,12 @@ export default function CommandLine({
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            if (input.trim()) {
-                onSubmit(input);
+            const command =
+                suggestions.length > 0
+                    ? suggestions[selectedIndex].command
+                    : input.trim();
+            if (command) {
+                onSubmit(command);
                 setInput("");
                 setShowSuggestions(true);
                 setSelectedIndex(0);
@@ -162,8 +166,8 @@ export default function CommandLine({
                                 key={s.command}
                                 onClick={() => acceptSuggestion(s.command)}
                                 className={`w-full flex items-center gap-3 px-3 py-1.5 text-xs font-mono transition-colors cursor-pointer border-0 text-left ${i === selectedIndex
-                                        ? "bg-accent/10 text-accent"
-                                        : "text-text hover:bg-white/[0.04]"
+                                    ? "bg-accent/10 text-accent"
+                                    : "text-text hover:bg-white/[0.04]"
                                     }`}
                             >
                                 <span
