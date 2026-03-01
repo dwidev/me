@@ -12,6 +12,7 @@ function HelpOutput() {
         { cmd: "projects", desc: "View my projects" },
         { cmd: "ls", desc: "Alias for projects" },
         { cmd: "socials", desc: "Find me online" },
+        { cmd: "snake", desc: "Play the Snake game 🐍" },
         { cmd: "clear", desc: "Clear the terminal" },
     ];
 
@@ -185,6 +186,10 @@ export const commandRegistry: Record<string, CommandHandler> = {
     socials: {
         description: "Find me online",
         handler: () => <SocialsOutput />,
+    },
+    snake: {
+        description: "Play the Snake game 🐍",
+        handler: () => null, // Intercepted by Terminal for fullscreen mode
     },
     clear: {
         description: "Clear the terminal",
