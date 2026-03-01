@@ -233,6 +233,14 @@ export default function SnakeGame({ onExit }: SnakeGameProps) {
         }
     }, [gameState, tick]);
 
+    const handleDirection = useCallback((newDir: Direction) => {
+        const dir = directionRef.current;
+        if (newDir === "UP" && dir !== "DOWN") nextDirectionRef.current = "UP";
+        if (newDir === "DOWN" && dir !== "UP") nextDirectionRef.current = "DOWN";
+        if (newDir === "LEFT" && dir !== "RIGHT") nextDirectionRef.current = "LEFT";
+        if (newDir === "RIGHT" && dir !== "LEFT") nextDirectionRef.current = "RIGHT";
+    }, []);
+
     // Keyboard
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
@@ -262,28 +270,28 @@ export default function SnakeGame({ onExit }: SnakeGameProps) {
                 case "W":
                     e.preventDefault();
                     e.stopPropagation();
-                    if (dir !== "DOWN") nextDirectionRef.current = "UP";
+                    handleDirection("UP");
                     break;
                 case "ArrowDown":
                 case "s":
                 case "S":
                     e.preventDefault();
                     e.stopPropagation();
-                    if (dir !== "UP") nextDirectionRef.current = "DOWN";
+                    handleDirection("DOWN");
                     break;
                 case "ArrowLeft":
                 case "a":
                 case "A":
                     e.preventDefault();
                     e.stopPropagation();
-                    if (dir !== "RIGHT") nextDirectionRef.current = "LEFT";
+                    handleDirection("LEFT");
                     break;
                 case "ArrowRight":
                 case "d":
                 case "D":
                     e.preventDefault();
                     e.stopPropagation();
-                    if (dir !== "LEFT") nextDirectionRef.current = "RIGHT";
+                    handleDirection("RIGHT");
                     break;
             }
         };
@@ -364,6 +372,48 @@ export default function SnakeGame({ onExit }: SnakeGameProps) {
                         </div>
                     )}
                 </div>
+            </div>
+
+            {/* Mobile D-Pad Controls (Visible only on small screens) */}
+            <div className="md:hidden flex flex-col items-center justify-center pb-6 shrink-0 gap-2">
+                <button
+                    className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-xl text-accent active:bg-white/10"
+                    onClick={(e) => { e.preventDefault(); handleDirection("UP"); }}
+                >
+                    ↑
+                </button>
+                <div className="flex gap-2">
+                    <button
+                        className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-xl text-accent active:bg-white/10"
+                        onClick={(e) => { e.preventDefault(); handleDirection("LEFT"); }}
+                    >
+                        ←
+                    </button>
+                    <div className="w-14 h-14 flex items-center justify-center">
+                        <div className="w-4 h-4 rounded-full bg-white/10" />
+                    </div>
+                    <button
+                        className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-xl text-accent active:bg-white/10"
+                        onClick={(e) => { e.preventDefault(); handleDirection("RIGHT"); }}
+                    >
+                        →
+                    </button>
+                </div>
+                <button
+                    className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-xl text-accent active:bg-white/10"
+                    onClick={(e) => { e.preventDefault(); handleDirection("DOWN"); }}
+                >
+                    ↓
+                </button>
+
+                {gameState !== "playing" && (
+                    <button
+                        className="mt-4 px-6 py-3 bg-accent text-black font-bold rounded-lg"
+                        onClick={resetGame}
+                    >
+                        {gameState === "over" ? "RESTART" : "START"}
+                    </button>
+                )}
             </div>
         </div>
     );

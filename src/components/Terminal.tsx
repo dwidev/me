@@ -133,10 +133,9 @@ export default function Terminal() {
                         layout: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
                     }}
                     className={`terminal-window overflow-hidden flex flex-col ${isFullscreen
-                        ? "rounded-none border-0 h-screen"
-                        : "rounded-xl border border-white/[0.06]"
+                        ? "rounded-none border-0 h-[100dvh]"
+                        : "rounded-none border-0 h-[100dvh] md:rounded-xl md:border md:border-white/[0.06] md:h-[80vh]"
                         }`}
-                    style={!isFullscreen ? { height: "80vh" } : undefined}
                 >
                     <TerminalHeader
                         isFullscreen={isFullscreen}
