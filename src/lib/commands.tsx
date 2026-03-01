@@ -3,6 +3,7 @@
 import React from "react";
 import { CommandHandler } from "@/types/terminal";
 import { profile, projects, socials } from "@/lib/mockData";
+import ProjectImages from "@/components/ProjectImages";
 
 function HelpOutput() {
     const commands = [
@@ -81,12 +82,12 @@ function WhoamiOutput() {
 
 function ProjectsOutput() {
     return (
-        <div className="space-y-4">
+        <div className="space-y-5">
             <p className="text-accent font-bold">
                 Projects ({projects.length} total):
             </p>
             {projects.map((project) => (
-                <div key={project.slug} className="border-l-2 border-accent/30 pl-3 space-y-1">
+                <div key={project.slug} className="pl-1 space-y-2">
                     <p className="text-green font-bold">{project.title}</p>
                     <p className="text-text text-sm">{project.description}</p>
                     <div className="flex flex-wrap gap-1.5 mt-1">
@@ -121,6 +122,9 @@ function ProjectsOutput() {
                             </a>
                         )}
                     </div>
+                    {project.images && project.images.length > 0 && (
+                        <ProjectImages images={project.images} alt={project.title} />
+                    )}
                 </div>
             ))}
         </div>

@@ -18,6 +18,8 @@ export interface Project {
     title: string;
     description: string;
     techStack: string[];
+    image?: string;
+    images?: string[];
     repoUrl?: string;
     liveUrl?: string;
 }

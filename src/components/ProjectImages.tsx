@@ -1,0 +1,195 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface ImageLightboxProps {
+    images: string[];
+    currentIndex: number;
+    alt: string;
+    onClose: () => void;
+    onNext: () => void;
+    onPrev: () => void;
+}
+
+function ImageLightbox({
+    images,
+    currentIndex,
+    alt,
+    onClose,
+    onNext,
+    onPrev,
+}: ImageLightboxProps) {
+    useEffect(() => {
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+            } else if (e.key === "ArrowRight" || e.key === "d") {
+                e.preventDefault();
+                e.stopPropagation();
+                onNext();
+            } else if (e.key === "ArrowLeft" || e.key === "a") {
+                e.preventDefault();
+                e.stopPropagation();
+                onPrev();
+            }
+        };
+        window.addEventListener("keydown", handleKey, true);
+        return () => window.removeEventListener("keydown", handleKey, true);
+    }, [onClose, onNext, onPrev]);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm cursor-pointer"
+            onClick={onClose}
+        >
+            {/* Prev button */}
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onPrev();
+                }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full
+                 bg-white/5 border border-white/10 text-muted hover:text-white hover:bg-white/10
+                 flex items-center justify-center text-lg transition-all cursor-pointer"
+            >
+                ‹
+            </button>
+
+            {/* Next button */}
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onNext();
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full
+                 bg-white/5 border border-white/10 text-muted hover:text-white hover:bg-white/10
+                 flex items-center justify-center text-lg transition-all cursor-pointer"
+            >
+                ›
+            </button>
+
+            <motion.div
+                initial={{ scale: 0.85, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.85, opacity: 0 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="relative max-w-[85vw] max-h-[85vh]"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <AnimatePresence mode="wait">
+                    <motion.img
+                        key={currentIndex}
+                        src={images[currentIndex]}
+                        alt={alt}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.2 }}
+                        className="max-w-full max-h-[80vh] rounded-lg shadow-2xl"
+                    />
+                </AnimatePresence>
+
+                {/* Close button */}
+                <button
+                    onClick={onClose}
+                    className="absolute -top-3 -right-3 w-7 h-7 rounded-full bg-[#1a1a1a] border border-white/10
+                   text-muted hover:text-error hover:border-error/30
+                   flex items-center justify-center text-xs transition-colors cursor-pointer"
+                >
+                    ✕
+                </button>
+
+                {/* Counter + hint */}
+                <div className="flex items-center justify-center gap-3 mt-3">
+                    <p className="text-muted text-[11px]">
+                        <span className="text-accent font-bold">{currentIndex + 1}</span>
+                        <span className="text-muted/50"> / </span>
+                        <span className="text-muted">{images.length}</span>
+                    </p>
+                    <span className="text-muted/30 text-[10px]">·</span>
+                    <p className="text-muted text-[10px]">
+                        <span className="text-accent">←</span>{" "}
+                        <span className="text-accent">→</span> navigate
+                        {" · "}
+                        <span className="text-accent">ESC</span> close
+                    </p>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+}
+
+interface ProjectImagesProps {
+    images: string[];
+    alt: string;
+}
+
+export default function ProjectImages({ images, alt }: ProjectImagesProps) {
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+    const openLightbox = useCallback((index: number) => {
+        setLightboxIndex(index);
+    }, []);
+
+    const closeLightbox = useCallback(() => {
+        setLightboxIndex(null);
+    }, []);
+
+    const goNext = useCallback(() => {
+        setLightboxIndex((prev) =>
+            prev !== null ? (prev + 1) % images.length : null
+        );
+    }, [images.length]);
+
+    const goPrev = useCallback(() => {
+        setLightboxIndex((prev) =>
+            prev !== null ? (prev - 1 + images.length) % images.length : null
+        );
+    }, [images.length]);
+
+    return (
+        <>
+            <div className="flex gap-1.5 flex-wrap">
+                {images.map((src, i) => (
+                    <button
+                        key={i}
+                        onClick={() => openLightbox(i)}
+                        className="group relative w-16 h-16 rounded overflow-hidden
+                     transition-all cursor-pointer shrink-0"
+                    >
+                        <img
+                            src={src}
+                            alt={`${alt} preview ${i + 1}`}
+                            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+                        />
+                        <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors flex items-center justify-center">
+                            <span className="text-white/60 group-hover:text-white text-[10px] group-hover:scale-110 transition-all">
+                                🔍
+                            </span>
+                        </div>
+                    </button>
+                ))}
+            </div>
+
+            <AnimatePresence>
+                {lightboxIndex !== null && (
+                    <ImageLightbox
+                        images={images}
+                        currentIndex={lightboxIndex}
+                        alt={alt}
+                        onClose={closeLightbox}
+                        onNext={goNext}
+                        onPrev={goPrev}
+                    />
+                )}
+            </AnimatePresence>
+        </>
+    );
+}

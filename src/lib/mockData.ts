@@ -30,6 +30,7 @@ export const projects: Project[] = [
         description:
             "A CLI-style portfolio website built with Next.js 15 and Framer Motion. You're looking at it right now.",
         techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        images: ["/projects/terminal-portfolio.png", "/projects/task-manager.png", "/projects/mobile-banking.png", "/projects/ai-chatbot.png", "/projects/terminal-portfolio.png"],
         liveUrl: "https://dwifahmi.dev",
         repoUrl: "https://github.com/dwifahmi/portfolio",
     },
@@ -39,6 +40,7 @@ export const projects: Project[] = [
         description:
             "A full-stack task management app with real-time sync and team collaboration features.",
         techStack: ["React", "Node.js", "PostgreSQL", "WebSocket"],
+        images: ["/projects/task-manager.png", "/projects/terminal-portfolio.png", "/projects/ai-chatbot.png", "/projects/mobile-banking.png", "/projects/task-manager.png"],
         repoUrl: "https://github.com/dwifahmi/task-manager",
     },
     {
@@ -47,6 +49,7 @@ export const projects: Project[] = [
         description:
             "A secure mobile banking application with biometric auth and instant transfers.",
         techStack: ["Flutter", "Dart", "Firebase", "REST API"],
+        images: ["/projects/mobile-banking.png", "/projects/ai-chatbot.png", "/projects/terminal-portfolio.png", "/projects/task-manager.png", "/projects/mobile-banking.png"],
     },
     {
         slug: "ai-chatbot",
@@ -54,6 +57,7 @@ export const projects: Project[] = [
         description:
             "An intelligent chatbot builder with NLP integration and analytics dashboard.",
         techStack: ["Python", "FastAPI", "React", "OpenAI"],
+        images: ["/projects/ai-chatbot.png", "/projects/mobile-banking.png", "/projects/task-manager.png", "/projects/terminal-portfolio.png", "/projects/ai-chatbot.png"],
         repoUrl: "https://github.com/dwifahmi/chatbot",
         liveUrl: "https://chatbot.dwifahmi.dev",
     },
