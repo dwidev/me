@@ -60,14 +60,19 @@ export default function LanguageSelector({ onSelect, onCancel }: LanguageSelecto
                 <span className="text-text">language</span>
             </div>
 
-            <p className="text-accent font-bold mt-2">Select a language (Use arrow keys, Enter to confirm, ESC to cancel):</p>
+            <p className="text-accent font-bold mt-2">Select a language (Tap/Click an option or use arrow keys + Enter):</p>
             <div className="space-y-1 ml-2">
                 {langs.map((lang, i) => (
                     <div
                         key={lang.id}
-                        className={`flex items-center gap-3 cursor-pointer select-none transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
+                        className={`flex items-center gap-3 py-1 cursor-pointer select-none transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
                             }`}
-                        onClick={() => setSelectedIndex(i)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSelectedIndex(i);
+                            onSelect(lang.id);
+                        }}
                     >
                         <span className="w-4 text-center">
                             {i === selectedIndex ? "❯" : ""}

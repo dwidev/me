@@ -62,14 +62,19 @@ export default function ThemeSelector({ onSelect, onCancel }: ThemeSelectorProps
                 <span className="text-text">theme</span>
             </div>
 
-            <p className="text-accent font-bold mt-2">Select a theme (Use arrow keys, Enter to confirm, ESC to cancel):</p>
+            <p className="text-accent font-bold mt-2">Select a theme (Tap/Click an option or use arrow keys + Enter):</p>
             <div className="space-y-1 ml-2">
                 {themes.map((theme, i) => (
                     <div
                         key={theme.id}
-                        className={`flex items-center gap-3 cursor-pointer select-none transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
+                        className={`flex items-center gap-3 py-1 cursor-pointer select-none transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
                             }`}
-                        onClick={() => setSelectedIndex(i)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSelectedIndex(i);
+                            onSelect(theme.id);
+                        }}
                     >
                         <span className="w-4 text-center">
                             {i === selectedIndex ? "❯" : ""}

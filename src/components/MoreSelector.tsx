@@ -60,14 +60,19 @@ export default function MoreSelector({ onSelect, onCancel }: MoreSelectorProps) 
                 <span className="text-text">more</span>
             </div>
 
-            <p className="text-accent font-bold mt-2">More options (Use arrow keys, Enter to confirm, ESC to cancel):</p>
+            <p className="text-accent font-bold mt-2">More options (Tap/Click an option or use arrow keys + Enter):</p>
             <div className="space-y-1 ml-2">
                 {options.map((option, i) => (
                     <div
                         key={option.id}
-                        className={`flex items-center gap-3 cursor-pointer select-none transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
+                        className={`flex items-center gap-3 py-1 cursor-pointer select-none transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
                             }`}
-                        onClick={() => setSelectedIndex(i)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSelectedIndex(i);
+                            onSelect(option.id);
+                        }}
                     >
                         <span className="w-4 text-center">
                             {i === selectedIndex ? "❯" : ""}
