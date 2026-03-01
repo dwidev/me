@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🖥️ Terminal Portfolio
 
-## Getting Started
+A minimalist, high-fidelity portfolio website that replaces traditional UI with a fully functional **Command Line Interface (CLI)**. Inspired by **Claude Code** and **modern developer terminals** — sleek, responsive, and deeply technical, yet accessible through guided options.
 
-First, run the development server:
+> **"Show, don't tell."** The site is a tool the user operates, mirroring a developer's daily environment.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Screenshots
+
+### Welcome Screen
+The terminal boots with a staggered system initialization sequence, then displays an ASCII art banner with clickable shortcut buttons.
+
+![Welcome Screen](docs/screenshots/welcome.png)
+
+### About Command
+Displays profile information, skills, location, and contact details.
+
+![About Command](docs/screenshots/about.png)
+
+### Projects & Help
+Lists all projects with tech stack tags and repo/live links. The `help` command shows all available commands.
+
+![Projects & Help](docs/screenshots/help_and_projects.png)
+
+### Error Handling
+Unrecognized commands show a friendly `zsh: command not found` message with a hint to try `help`.
+
+![Error Handling](docs/screenshots/error_fallback.png)
+
+### Fullscreen Mode
+Click the green traffic light dot to toggle between windowed and fullscreen mode.
+
+![Fullscreen Mode](docs/screenshots/fullscreen.png)
+
+---
+
+## 🚀 Features
+
+- **Boot Sequence** — Staggered `[OK]` system messages with Framer Motion animations
+- **ASCII Art Banner** — Personalized welcome header
+- **7 Commands** — `help`, `about`, `whoami`, `projects`, `ls`, `socials`, `clear`
+- **Auto-Suggestions** — Inline ghost text + dropdown as you type, Tab to accept
+- **Click-to-Type Shortcuts** — `[1] About`, `[2] Projects`, `[3] Socials`, `[4] Help`
+- **Command History** — Arrow Up/Down to cycle through past inputs
+- **Fullscreen / Windowed Toggle** — Green dot toggles between modes with smooth animation
+- **Error Fallback** — `zsh: command not found` with helpful hints
+- **CRT Scanline Overlay** — Subtle retro terminal effect
+- **Terminal Glow** — Accent-colored box shadow for that premium feel
+- **Auto-scroll** — Terminal always scrolls to the latest output
+- **Keyboard-Only Navigation** — Fully usable without a mouse
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer      | Technology                              |
+|------------|-----------------------------------------|
+| Framework  | [Next.js 15](https://nextjs.org) (App Router) |
+| Language   | TypeScript                              |
+| Styling    | [Tailwind CSS v4](https://tailwindcss.com)    |
+| Animation  | [Framer Motion](https://motion.dev)     |
+| Font       | JetBrains Mono (via `next/font/google`) |
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── globals.css          # Terminal theme, CRT scanlines, animations
+│   ├── layout.tsx           # Root layout with fonts & SEO metadata
+│   └── page.tsx             # Main page rendering Terminal
+├── components/
+│   ├── Terminal.tsx          # Main container: boot → welcome → interactive
+│   ├── TerminalHeader.tsx    # macOS traffic light dots + title bar
+│   ├── BootSequence.tsx      # Staggered [OK] boot messages
+│   ├── CommandLine.tsx       # Input prompt with auto-suggestions
+│   ├── CommandOutput.tsx     # Renders command + output pairs
+│   ├── TypewriterText.tsx    # Character-by-character text reveal
+│   └── AsciiArt.tsx          # ASCII art welcome banner
+├── hooks/
+│   └── useTerminal.ts        # Terminal state management
+├── lib/
+│   ├── commands.tsx          # Command registry & handlers
+│   └── mockData.ts           # Profile, projects, socials data
+└── types/
+    └── terminal.ts           # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏁 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
 
-## Learn More
+- Node.js 20+
+- npm
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Clone the repository
+git clone git@github.com:dwidev/me.git
+cd me
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Install dependencies
+npm install
 
-## Deploy on Vercel
+# Start the dev server
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Open [http://localhost:3000](http://localhost:3000) to see the terminal portfolio.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Build
+
+```bash
+npm run build
+```
+
+---
+
+## 🎨 Design Tokens
+
+| Token     | Value       | Usage               |
+|-----------|-------------|---------------------|
+| `--bg`    | `#0A0A0A`   | Deep black background |
+| `--text`  | `#E0E0E0`   | Soft white text     |
+| `--accent`| `#3B82F6`   | Claude blue highlights |
+| `--green` | `#10B981`   | Terminal green      |
+| `--error` | `#EF4444`   | Error messages      |
+| `--muted` | `#6B7280`   | Subdued text        |
+
+---
+
+## 📄 License
+
+MIT
