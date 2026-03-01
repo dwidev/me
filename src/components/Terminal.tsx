@@ -8,6 +8,7 @@ import AsciiArt from "./AsciiArt";
 import CommandLine from "./CommandLine";
 import CommandOutput from "./CommandOutput";
 import SnakeGame from "./SnakeGame";
+import ThemeSelector from "./ThemeSelector";
 import { useTerminal } from "@/hooks/useTerminal";
 
 const shortcuts = [
@@ -25,6 +26,7 @@ export default function Terminal() {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [gameMode, setGameMode] = useState<string | null>(null);
     const [isStreaming, setIsStreaming] = useState(false);
+    const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
 
     // Auto-scroll to bottom
     useEffect(() => {
@@ -61,6 +63,12 @@ export default function Terminal() {
             // Intercept game commands
             if (cmd === "snake") {
                 setGameMode("snake");
+                return;
+            }
+
+            // Intercept theme interactive selector
+            if (cmd === "theme") {
+                setIsThemeSelectorOpen(true);
                 return;
             }
 
@@ -204,13 +212,26 @@ export default function Terminal() {
                                         ))}
                                     </div>
 
-                                    {/* Active input */}
+                                    {/* Active input or interactive prompts */}
                                     <div className="mt-3">
-                                        <CommandLine
-                                            onSubmit={handleCommand}
-                                            onNavigate={navigateHistory}
-                                            disabled={isStreaming}
-                                        />
+                                        {isThemeSelectorOpen ? (
+                                            <ThemeSelector
+                                                onSelect={(themeId) => {
+                                                    setIsThemeSelectorOpen(false);
+                                                    setIsStreaming(true);
+                                                    processCommand(`theme ${themeId}`);
+                                                }}
+                                                onCancel={() => {
+                                                    setIsThemeSelectorOpen(false);
+                                                }}
+                                            />
+                                        ) : (
+                                            <CommandLine
+                                                onSubmit={handleCommand}
+                                                onNavigate={navigateHistory}
+                                                disabled={isStreaming}
+                                            />
+                                        )}
                                     </div>
                                 </>
                             )}

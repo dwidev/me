@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CommandHandler } from "@/types/terminal";
 import { profile, projects, socials } from "@/lib/mockData";
 import ProjectImages from "@/components/ProjectImages";
@@ -13,6 +13,7 @@ function HelpOutput() {
         { cmd: "projects", desc: "View my projects" },
         { cmd: "ls", desc: "Alias for projects" },
         { cmd: "socials", desc: "Find me online" },
+        { cmd: "theme", desc: "Change terminal theme (e.g., theme hacker)" },
         { cmd: "snake", desc: "Play the Snake game 🐍" },
         { cmd: "clear", desc: "Clear the terminal" },
     ];
@@ -166,6 +167,74 @@ function ErrorOutput({ input }: { input: string }) {
     );
 }
 
+const availableThemes = ["dark", "light", "dracula", "hacker", "retro"];
+
+function ThemeOutput({ args }: { args: string[] }) {
+    const [status, setStatus] = useState<"processing" | "success" | "invalid">("processing");
+    const themeTarget = args[0]?.toLowerCase();
+
+    useEffect(() => {
+        if (!themeTarget) {
+            setStatus("invalid");
+            return;
+        }
+
+        if (availableThemes.includes(themeTarget)) {
+            // Apply theme
+            const root = document.documentElement;
+            // Remove previous theme classes
+            root.classList.forEach((cls) => {
+                if (cls.startsWith("theme-")) {
+                    root.classList.remove(cls);
+                }
+            });
+            // Default "dark" means no extra class needed
+            if (themeTarget !== "dark") {
+                root.classList.add(`theme-${themeTarget}`);
+            }
+            localStorage.setItem("portfolio-theme", themeTarget);
+            setStatus("success");
+        } else {
+            setStatus("invalid");
+        }
+    }, [themeTarget]);
+
+    if (status === "processing") return null;
+
+    if (!themeTarget) {
+        return (
+            <div className="space-y-2">
+                <p className="text-accent font-bold">Usage: theme [name]</p>
+                <div className="space-y-1">
+                    <p className="text-muted">Available themes:</p>
+                    <div className="flex flex-wrap gap-3">
+                        {availableThemes.map((t) => (
+                            <span key={t} className="text-green">{t}</span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (status === "invalid") {
+        return (
+            <div>
+                <p className="text-error">Unknown theme: {themeTarget}</p>
+                <p className="text-muted">Available themes: {availableThemes.join(", ")}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <p className="text-green">
+                Theme successfully changed to: <span className="text-accent">{themeTarget}</span>
+            </p>
+        </div>
+    );
+}
+
 export const commandRegistry: Record<string, CommandHandler> = {
     help: {
         description: "Show available commands",
@@ -190,6 +259,10 @@ export const commandRegistry: Record<string, CommandHandler> = {
     socials: {
         description: "Find me online",
         handler: () => <SocialsOutput />,
+    },
+    theme: {
+        description: "Change terminal theme",
+        handler: (args) => <ThemeOutput args={args} />,
     },
     snake: {
         description: "Play the Snake game 🐍",

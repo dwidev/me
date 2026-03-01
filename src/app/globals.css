@@ -1,17 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0A0A0A;
-  --color-text: #E0E0E0;
-  --color-accent: #3B82F6;
-  --color-green: #10B981;
-  --color-error: #EF4444;
-  --color-muted: #6B7280;
-  --color-surface: #111111;
+  --color-bg: var(--theme-bg);
+  --color-text: var(--theme-text);
+  --color-accent: var(--theme-accent);
+  --color-green: var(--theme-green);
+  --color-error: var(--theme-error);
+  --color-muted: var(--theme-muted);
+  --color-surface: var(--theme-surface);
   --font-mono: "JetBrains Mono", monospace;
 }
 
-/* ── Base ──────────────────────────────────────────── */
+/* ── Base Theme (Dark / Default) ────────────────────── */
+:root {
+  --theme-bg: #0A0A0A;
+  --theme-text: #E0E0E0;
+  --theme-accent: #3B82F6;
+  --theme-green: #10B981;
+  --theme-error: #EF4444;
+  --theme-muted: #6B7280;
+  --theme-surface: #111111;
+}
+
+/* ── Light Theme ────────────────────────────────────── */
+.theme-light {
+  --theme-bg: #F8FAFC;
+  --theme-text: #0F172A;
+  --theme-accent: #2563EB;
+  --theme-green: #059669;
+  --theme-error: #DC2626;
+  --theme-muted: #64748B;
+  --theme-surface: #FFFFFF;
+}
+
+/* ── Dracula Theme ──────────────────────────────────── */
+.theme-dracula {
+  --theme-bg: #282a36;
+  --theme-text: #f8f8f2;
+  --theme-accent: #bd93f9;
+  --theme-green: #50fa7b;
+  --theme-error: #ff5555;
+  --theme-muted: #6272a4;
+  --theme-surface: #44475a;
+}
+
+/* ── Hacker Theme ───────────────────────────────────── */
+.theme-hacker {
+  --theme-bg: #000000;
+  --theme-text: #00FF00;
+  --theme-accent: #00FF00;
+  --theme-green: #00FF00;
+  --theme-error: #FF0000;
+  --theme-muted: #008800;
+  --theme-surface: #0a0a0a;
+}
+
+/* ── Retro Theme ────────────────────────────────────── */
+.theme-retro {
+  --theme-bg: #2B211A;
+  --theme-text: #FFB000;
+  --theme-accent: #FF5722;
+  --theme-green: #FFB000;
+  --theme-error: #FF0000;
+  --theme-muted: #8C6A3C;
+  --theme-surface: #3E2F23;
+}
+
+/* ── Default Base Styles ───────────────────────────── */
 * {
   box-sizing: border-box;
 }
@@ -30,13 +85,16 @@ body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-muted);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
 }
@@ -63,21 +121,28 @@ body {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.03) 0px,
-    rgba(0, 0, 0, 0.03) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+  background: repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 3px);
   opacity: 0.5;
 }
 
 /* ── Blinking Cursor ───────────────────────────────── */
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
+
 .animate-blink {
   animation: blink 1s infinite;
 }
@@ -92,6 +157,7 @@ body {
 input {
   font-family: var(--font-mono);
 }
+
 input::placeholder {
   font-family: var(--font-mono);
 }
