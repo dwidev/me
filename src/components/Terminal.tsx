@@ -9,6 +9,8 @@ import CommandLine from "./CommandLine";
 import CommandOutput from "./CommandOutput";
 import SnakeGame from "./SnakeGame";
 import ThemeSelector from "./ThemeSelector";
+import MoreSelector from "./MoreSelector";
+import LanguageSelector from "./LanguageSelector";
 import { useTerminal } from "@/hooks/useTerminal";
 
 const shortcuts = [
@@ -27,6 +29,9 @@ export default function Terminal() {
     const [gameMode, setGameMode] = useState<string | null>(null);
     const [isStreaming, setIsStreaming] = useState(false);
     const [isThemeSelectorOpen, setIsThemeSelectorOpen] = useState(false);
+    const [isMoreSelectorOpen, setIsMoreSelectorOpen] = useState(false);
+    const [isLanguageSelectorOpen, setIsLanguageSelectorOpen] = useState(false);
+    const [showMoreMenu, setShowMoreMenu] = useState(false);
 
     // Auto-scroll to bottom
     useEffect(() => {
@@ -61,14 +66,26 @@ export default function Terminal() {
             if (!cmd) return;
 
             // Intercept game commands
-            if (cmd === "snake") {
-                setGameMode("snake");
+            if (cmd === "game") {
+                setGameMode("game");
                 return;
             }
 
             // Intercept theme interactive selector
             if (cmd === "theme") {
                 setIsThemeSelectorOpen(true);
+                return;
+            }
+
+            // Intercept language interactive selector
+            if (cmd === "language") {
+                setIsLanguageSelectorOpen(true);
+                return;
+            }
+
+            // Intercept more options menu
+            if (cmd === "more") {
+                setIsMoreSelectorOpen(true);
                 return;
             }
 
@@ -87,6 +104,11 @@ export default function Terminal() {
     const handleShortcut = useCallback(
         (command: string) => {
             if (isStreaming) return;
+            if (command === "more") {
+                setShowMoreMenu((prev) => !prev);
+                return;
+            }
+            setShowMoreMenu(false);
             handleCommand(command);
         },
         [handleCommand, isStreaming]
@@ -151,7 +173,7 @@ export default function Terminal() {
                     />
 
                     {/* Game Mode — takes over the entire body */}
-                    {gameMode === "snake" && (
+                    {gameMode === "game" && (
                         <div className="flex-1 overflow-hidden bg-[#0A0A0A]">
                             <SnakeGame onExit={exitGame} />
                         </div>
@@ -196,6 +218,39 @@ export default function Terminal() {
                                                 <span>{s.label}</span>
                                             </button>
                                         ))}
+
+                                        {/* More Dropdown */}
+                                        <div className="relative">
+                                            <button
+                                                onClick={() => handleShortcut("more")}
+                                                disabled={isStreaming}
+                                                className={`px-3 py-1.5 text-xs font-mono border border-accent/20 rounded-md
+                                                 text-accent transition-all duration-200 ${isStreaming
+                                                        ? "opacity-40 cursor-not-allowed"
+                                                        : "hover:bg-accent/10 hover:border-accent/40 active:scale-95 cursor-pointer"
+                                                    }`}
+                                            >
+                                                <span className="text-green">[5]</span>{" "}
+                                                <span>More {showMoreMenu ? "▲" : "▼"}</span>
+                                            </button>
+
+                                            {showMoreMenu && (
+                                                <div className="absolute top-full left-0 mt-2 bg-[#0A0A0A] border border-accent/20 rounded-md shadow-lg z-10 w-32 flex flex-col py-1">
+                                                    <button
+                                                        onClick={() => handleShortcut("theme")}
+                                                        className="px-4 py-2 text-xs font-mono text-left text-accent hover:bg-accent/10 transition-colors"
+                                                    >
+                                                        <span className="text-green">[t]</span> Theme
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleShortcut("game")}
+                                                        className="px-4 py-2 text-xs font-mono text-left text-accent hover:bg-accent/10 transition-colors"
+                                                    >
+                                                        <span className="text-green">[g]</span> Game
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
                                     </motion.div>
 
                                     <div className="border-t border-white/5 my-4" />
@@ -223,6 +278,27 @@ export default function Terminal() {
                                                 }}
                                                 onCancel={() => {
                                                     setIsThemeSelectorOpen(false);
+                                                }}
+                                            />
+                                        ) : isLanguageSelectorOpen ? (
+                                            <LanguageSelector
+                                                onSelect={(langId) => {
+                                                    setIsLanguageSelectorOpen(false);
+                                                    setIsStreaming(true);
+                                                    processCommand(`language ${langId}`);
+                                                }}
+                                                onCancel={() => {
+                                                    setIsLanguageSelectorOpen(false);
+                                                }}
+                                            />
+                                        ) : isMoreSelectorOpen ? (
+                                            <MoreSelector
+                                                onSelect={(selection) => {
+                                                    setIsMoreSelectorOpen(false);
+                                                    handleCommand(selection);
+                                                }}
+                                                onCancel={() => {
+                                                    setIsMoreSelectorOpen(false);
                                                 }}
                                             />
                                         ) : (

@@ -35,7 +35,7 @@ export default function CommandOutput({ entry, isLatest, onStreamComplete }: Com
             {entry.output && (
                 <div className="pl-0 font-mono text-sm ml-0 mt-1 mb-3">
                     <StreamingOutput
-                        speed={20}
+                        speed={5}
                         onComplete={isLatest ? onStreamComplete : undefined}
                     >
                         {entry.output}

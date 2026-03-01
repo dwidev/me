@@ -305,7 +305,7 @@ export default function SnakeGame({ onExit }: SnakeGameProps) {
             {/* HUD bar */}
             <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 shrink-0">
                 <div className="flex items-center gap-3">
-                    <span className="text-accent font-bold text-sm">🐍 Snake</span>
+                    <span className="text-accent font-bold text-sm">🐍 Game</span>
                     <span className="text-muted text-[11px]">
                         <span className="text-green">WASD</span> / Arrows to move
                     </span>

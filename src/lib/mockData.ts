@@ -97,10 +97,4 @@ export const asciiArt = `
 
 export const bootMessages = [
     { text: "[OK] Initializing system...", delay: 0 },
-    { text: "[OK] Loading Next.js 15 runtime...", delay: 0.15 },
-    { text: "[OK] Mounting Tailwind CSS v4...", delay: 0.3 },
-    { text: "[OK] Hydrating UI components...", delay: 0.45 },
-    { text: "[OK] Connecting Framer Motion engine...", delay: 0.6 },
-    { text: "[OK] Loading project data...", delay: 0.75 },
-    { text: "[OK] System ready.", delay: 0.9 },
 ];

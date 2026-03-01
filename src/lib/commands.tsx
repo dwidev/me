@@ -13,8 +13,7 @@ function HelpOutput() {
         { cmd: "projects", desc: "View my projects" },
         { cmd: "ls", desc: "Alias for projects" },
         { cmd: "socials", desc: "Find me online" },
-        { cmd: "theme", desc: "Change terminal theme (e.g., theme hacker)" },
-        { cmd: "snake", desc: "Play the Snake game 🐍" },
+        { cmd: "more", desc: "Show more options" },
         { cmd: "clear", desc: "Clear the terminal" },
     ];
 
@@ -235,6 +234,63 @@ function ThemeOutput({ args }: { args: string[] }) {
     );
 }
 
+const availableLanguages = ["en", "id", "jp"];
+
+function LanguageOutput({ args }: { args: string[] }) {
+    const [status, setStatus] = useState<"processing" | "success" | "invalid">("processing");
+    const langTarget = args[0]?.toLowerCase();
+
+    useEffect(() => {
+        if (!langTarget) {
+            setStatus("invalid");
+            return;
+        }
+
+        if (availableLanguages.includes(langTarget)) {
+            // Here you could trigger i18n changes, right now just updating localstorage
+            localStorage.setItem("portfolio-lang", langTarget);
+            setStatus("success");
+        } else {
+            setStatus("invalid");
+        }
+    }, [langTarget]);
+
+    if (status === "processing") return null;
+
+    if (!langTarget) {
+        return (
+            <div className="space-y-2">
+                <p className="text-accent font-bold">Usage: language [code]</p>
+                <div className="space-y-1">
+                    <p className="text-muted">Available languages:</p>
+                    <div className="flex flex-wrap gap-3">
+                        {availableLanguages.map((t) => (
+                            <span key={t} className="text-green">{t}</span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (status === "invalid") {
+        return (
+            <div>
+                <p className="text-error">Unknown language: {langTarget}</p>
+                <p className="text-muted">Available languages: {availableLanguages.join(", ")}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <p className="text-green">
+                Language successfully changed to: <span className="text-accent">{langTarget}</span>
+            </p>
+        </div>
+    );
+}
+
 export const commandRegistry: Record<string, CommandHandler> = {
     help: {
         description: "Show available commands",
@@ -264,9 +320,17 @@ export const commandRegistry: Record<string, CommandHandler> = {
         description: "Change terminal theme",
         handler: (args) => <ThemeOutput args={args} />,
     },
-    snake: {
-        description: "Play the Snake game 🐍",
+    language: {
+        description: "Change terminal language",
+        handler: (args) => <LanguageOutput args={args} />,
+    },
+    game: {
+        description: "Play the game 🐍",
         handler: () => null, // Intercepted by Terminal for fullscreen mode
+    },
+    more: {
+        description: "Show more options",
+        handler: () => null, // Intercepted by Terminal for interactive menu
     },
     clear: {
         description: "Clear the terminal",
@@ -280,10 +344,14 @@ export function getCommandSuggestions(
     const trimmed = partial.trim().toLowerCase();
     if (!trimmed) return [];
 
-    const allCommands = Object.entries(commandRegistry).map(([cmd, handler]) => ({
-        command: cmd,
-        description: handler.description,
-    }));
+    const hiddenCommands = ["theme", "language", "game"];
+
+    const allCommands = Object.entries(commandRegistry)
+        .filter(([cmd]) => !hiddenCommands.includes(cmd))
+        .map(([cmd, handler]) => ({
+            command: cmd,
+            description: handler.description,
+        }));
 
     // Prefix matches first, then includes matches
     const prefixMatches = allCommands.filter(
