@@ -1,26 +1,29 @@
 import { Project, SocialLink, Education, Experience } from "@/types/terminal";
 
 export const profile = {
-    name: "Dwi Fahmi",
+    name: "Fahmi Dwi Syahputra",
     alias: "dwifahmi",
     title: "Software Engineer",
     bio: [
         "Passionate software engineer with a love for building elegant solutions.",
-        "Experienced in full-stack development, mobile apps, and cloud infrastructure.",
-        "Always exploring new technologies and pushing the boundaries of what's possible.",
+        "Experienced in frontend development, web development and mobile apps.",
+        "Always exploring new technologies and improving my skills.",
     ],
     skills: [
         "TypeScript",
+        "JavaScript",
         "React / Next.js",
+        "Vue JS",
         "Flutter / Dart",
         "Node.js",
+        "Golang",
         "PostgreSQL",
         "Supabase",
         "Docker",
         "Git",
     ],
-    location: "Indonesia",
-    email: "hello@dwifahmi.dev",
+    location: "Bogor, Indonesia",
+    email: "fahmidwi45@gmail.com",
 };
 
 export const projects: Project[] = [
@@ -88,31 +91,43 @@ export const socials: SocialLink[] = [
 
 export const education: Education[] = [
     {
-        institution: "University of Technology",
-        degree: "Bachelor of Science in Computer Science",
-        period: "2016 - 2020",
-        description: "Graduated with honors. Focused on Software Engineering and Artificial Intelligence.",
-    },
-    {
-        institution: "Tech Bootcamp",
-        degree: "Full Stack Web Development Certification",
-        period: "2020",
-        description: "Intensive 12-week program learning modern web technologies like React and Node.js.",
+        institution: "SMK Adi Sanggoro",
+        degree: "Software Engineering (Rekayasa Perangkat Lunak)",
+        period: "2012 - 2015",
+        description: "Activities and Societies: Multimedia Adi Sanggoro.",
     }
 ];
 
 export const experience: Experience[] = [
     {
-        company: "Tech Solutions Inc.",
-        role: "Senior Software Engineer",
-        period: "2023 - Present",
-        description: "Leading a team of 5 developers to build scalable cloud applications using Next.js and Go.",
+        company: "Tokio Marine Life Insurance Indonesia",
+        role: "Flutter Developer",
+        period: "Mar 2021 - Present",
+        description: "Designed and developed Flutter applications using Clean Architecture. Used Provider for efficient state management. Integrated REST APIs and gRPC for real-time data sync and batch processing. Created intuitive, responsive UIs focused on UX.",
     },
     {
-        company: "Creative Agency",
-        role: "Full Stack Developer",
-        period: "2020 - 2023",
-        description: "Developed and maintained multiple client websites and web platforms, improving load times by 40%.",
+        company: "Frisidea Tech",
+        role: "Frontend Developer",
+        period: "Nov 2019 - Present",
+        description: "Served as a Frontend Developer, maintaining and building various frontend web applications.",
+    },
+    {
+        company: "KDPMS",
+        role: "Web Developer",
+        period: "Aug 2018 - Nov 2019",
+        description: "Created a web application to streamline customer management for account officers. Included tracking submissions, income monitoring, and reporting using PHP (CodeIgniter 3), MySQL, and customized jQuery SPAs.",
+    },
+    {
+        company: "Freelance",
+        role: "Web Developer",
+        period: "Jan 2018 - Aug 2019",
+        description: "Created various custom web portals for clients as an independent freelancer.",
+    },
+    {
+        company: "Dinas Komunikasi dan Informatika",
+        role: "Web Developer",
+        period: "Aug 2017 - Oct 2017",
+        description: "Developed official government website portals and services at jdih.kotabogor.go.id.",
     }
 ];
 
