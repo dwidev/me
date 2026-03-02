@@ -59,8 +59,15 @@ export default function Terminal() {
 
     const handleBootComplete = useCallback(() => {
         finishBoot();
-        setTimeout(() => setShowWelcome(true), 200);
-    }, [finishBoot]);
+        setTimeout(() => {
+            setShowWelcome(true);
+            // Auto-run /about on startup
+            setTimeout(() => {
+                setIsStreaming(true);
+                processCommand("/about");
+            }, 300);
+        }, 200);
+    }, [finishBoot, processCommand]);
 
     const handleCommand = useCallback(
         (input: string) => {
