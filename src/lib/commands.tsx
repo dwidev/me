@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { CommandHandler } from "@/types/terminal";
-import { profile, projects, socials } from "@/lib/mockData";
+import { profile, projects, socials, education, experience } from "@/lib/mockData";
 import ProjectImages from "@/components/ProjectImages";
 
 function HelpOutput() {
@@ -13,6 +13,8 @@ function HelpOutput() {
         { cmd: "projects", desc: "View my projects" },
         { cmd: "ls", desc: "Alias for projects" },
         { cmd: "socials", desc: "Find me online" },
+        { cmd: "education", desc: "View my educational background" },
+        { cmd: "experience", desc: "View my work experience" },
         { cmd: "contact", desc: "Send me a message" },
         { cmd: "more", desc: "Show more options" },
         { cmd: "clear", desc: "Clear the terminal" },
@@ -148,6 +150,38 @@ function SocialsOutput() {
                         {social.name}
                     </a>
                     <span className="text-muted text-xs">{social.url}</span>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function EducationOutput() {
+    return (
+        <div className="space-y-4">
+            <p className="text-accent font-bold">Education History:</p>
+            {education.map((edu, i) => (
+                <div key={i} className="pl-1 border-l-2 border-white/10 space-y-1 py-1">
+                    <p className="text-green font-bold text-sm">{edu.institution}</p>
+                    <p className="text-accent text-xs">{edu.degree}</p>
+                    <p className="text-muted text-[11px] font-mono">{edu.period}</p>
+                    <p className="text-text text-sm mt-1">{edu.description}</p>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function ExperienceOutput() {
+    return (
+        <div className="space-y-4">
+            <p className="text-accent font-bold">Work Experience:</p>
+            {experience.map((exp, i) => (
+                <div key={i} className="pl-1 border-l-2 border-white/10 space-y-1 py-1">
+                    <p className="text-green font-bold text-sm">{exp.role}</p>
+                    <p className="text-accent text-xs">{exp.company}</p>
+                    <p className="text-muted text-[11px] font-mono">{exp.period}</p>
+                    <p className="text-text text-sm mt-1">{exp.description}</p>
                 </div>
             ))}
         </div>
@@ -316,6 +350,14 @@ export const commandRegistry: Record<string, CommandHandler> = {
     socials: {
         description: "Find me online",
         handler: () => <SocialsOutput />,
+    },
+    education: {
+        description: "View my educational background",
+        handler: () => <EducationOutput />,
+    },
+    experience: {
+        description: "View my work experience",
+        handler: () => <ExperienceOutput />,
     },
     theme: {
         description: "Change terminal theme",

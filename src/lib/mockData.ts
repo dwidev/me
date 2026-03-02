@@ -1,4 +1,4 @@
-import { Project, SocialLink } from "@/types/terminal";
+import { Project, SocialLink, Education, Experience } from "@/types/terminal";
 
 export const profile = {
     name: "Dwi Fahmi",
@@ -84,6 +84,36 @@ export const socials: SocialLink[] = [
         url: "mailto:hello@dwifahmi.dev",
         icon: "✉",
     },
+];
+
+export const education: Education[] = [
+    {
+        institution: "University of Technology",
+        degree: "Bachelor of Science in Computer Science",
+        period: "2016 - 2020",
+        description: "Graduated with honors. Focused on Software Engineering and Artificial Intelligence.",
+    },
+    {
+        institution: "Tech Bootcamp",
+        degree: "Full Stack Web Development Certification",
+        period: "2020",
+        description: "Intensive 12-week program learning modern web technologies like React and Node.js.",
+    }
+];
+
+export const experience: Experience[] = [
+    {
+        company: "Tech Solutions Inc.",
+        role: "Senior Software Engineer",
+        period: "2023 - Present",
+        description: "Leading a team of 5 developers to build scalable cloud applications using Next.js and Go.",
+    },
+    {
+        company: "Creative Agency",
+        role: "Full Stack Developer",
+        period: "2020 - 2023",
+        description: "Developed and maintained multiple client websites and web platforms, improving load times by 40%.",
+    }
 ];
 
 export const asciiArt = `

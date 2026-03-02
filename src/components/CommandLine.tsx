@@ -118,9 +118,9 @@ export default function CommandLine({
                 onClick={handleContainerClick}
             >
                 <span className="text-green shrink-0 select-none">
-                    <span className="text-accent">user</span>
+                    <span className="text-accent">root</span>
                     <span className="text-muted">@</span>
-                    <span className="text-green">portfolio</span>
+                    <span className="text-green">dwifahmi</span>
                     <span className="text-muted">:</span>
                     <span className="text-accent">~</span>
                     <span className="text-text">$</span>
