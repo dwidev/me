@@ -84,6 +84,12 @@ export default function MoreSelector({ onSelect, onCancel }: MoreSelectorProps) 
             <div className="mt-2 text-xs text-muted">
                 Select an application to launch.
             </div>
+            <button
+                onClick={onCancel}
+                className="mt-2 px-3 py-1.5 text-xs font-mono text-error border border-error/30 rounded active:scale-95 transition-all sm:hidden cursor-pointer"
+            >
+                Cancel (ESC)
+            </button>
         </motion.div>
     );
 }

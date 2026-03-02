@@ -161,3 +161,33 @@ input {
 input::placeholder {
   font-family: var(--font-mono);
 }
+
+textarea {
+  font-family: var(--font-mono);
+}
+
+/* ── Mobile Fixes ─────────────────────────────────── */
+/* Prevent iOS zoom on input focus (font-size must be >= 16px) */
+@media (max-width: 639px) {
+
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Slightly larger tap targets */
+  button {
+    min-height: 36px;
+  }
+
+  /* Safe area insets for notched devices */
+  .terminal-body {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Smooth touch scrolling */
+.terminal-body {
+  -webkit-overflow-scrolling: touch;
+}

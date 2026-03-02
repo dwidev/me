@@ -84,8 +84,14 @@ export default function ThemeSelector({ onSelect, onCancel }: ThemeSelectorProps
                 ))}
             </div>
             <div className="mt-2 text-xs text-muted">
-                Tip: You can also quick-set a theme by typing `theme hacker`
+                Tip: You can also quick-set a theme by typing `/theme hacker`
             </div>
+            <button
+                onClick={onCancel}
+                className="mt-2 px-3 py-1.5 text-xs font-mono text-error border border-error/30 rounded active:scale-95 transition-all sm:hidden cursor-pointer"
+            >
+                Cancel (ESC)
+            </button>
         </motion.div>
     );
 }

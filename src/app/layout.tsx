@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     "A CLI-style portfolio website. Navigate with commands like help, about, projects, and socials.",
   keywords: ["portfolio", "developer", "terminal", "CLI", "software engineer"],
   authors: [{ name: "Dwi Fahmi" }],
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export const viewport = {

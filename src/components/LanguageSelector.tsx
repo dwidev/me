@@ -82,8 +82,14 @@ export default function LanguageSelector({ onSelect, onCancel }: LanguageSelecto
                 ))}
             </div>
             <div className="mt-2 text-xs text-muted">
-                Tip: You can also quick-set a language by typing `language id`
+                Tip: You can also quick-set a language by typing `/language id`
             </div>
+            <button
+                onClick={onCancel}
+                className="mt-2 px-3 py-1.5 text-xs font-mono text-error border border-error/30 rounded active:scale-95 transition-all sm:hidden cursor-pointer"
+            >
+                Cancel (ESC)
+            </button>
         </motion.div>
     );
 }

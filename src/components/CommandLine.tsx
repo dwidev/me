@@ -53,6 +53,13 @@ export default function CommandLine({
         inputRef.current?.focus();
     };
 
+    const submitSuggestion = (command: string) => {
+        onSubmit(command);
+        setInput("");
+        setShowSuggestions(true);
+        setSelectedIndex(0);
+    };
+
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             const command =
@@ -150,10 +157,30 @@ export default function CommandLine({
                         autoCorrect="off"
                         spellCheck={false}
                         className="w-full bg-transparent text-text outline-none caret-accent font-mono text-sm placeholder:text-muted/40 relative z-10"
-                        placeholder={disabled ? "" : "Type a command..."}
+                        placeholder={disabled ? "" : "Type / to see commands..."}
                         id="terminal-input"
                     />
                 </div>
+                {/* Mobile submit button */}
+                {input.trim() && (
+                    <button
+                        onClick={() => {
+                            const command =
+                                suggestions.length > 0
+                                    ? suggestions[selectedIndex].command
+                                    : input.trim();
+                            if (command) {
+                                onSubmit(command);
+                                setInput("");
+                                setShowSuggestions(true);
+                                setSelectedIndex(0);
+                            }
+                        }}
+                        className="shrink-0 px-2 py-1 text-xs font-mono text-accent border border-accent/30 rounded active:scale-95 transition-all sm:hidden cursor-pointer"
+                    >
+                        ↵
+                    </button>
+                )}
             </div>
 
             {/* Suggestions dropdown */}
@@ -166,7 +193,7 @@ export default function CommandLine({
                         transition={{ duration: 0.15, ease: "easeOut" }}
                         className="mt-2 space-y-1 font-mono text-sm ml-2"
                     >
-                        <p className="text-accent font-bold mt-2 text-sm mb-2">Available commands (Use arrow keys + Tab/Enter to autocomplete, ESC to close):</p>
+                        <p className="text-accent font-bold mt-2 text-xs sm:text-sm mb-2">Select a command (Tap to run, ↑↓ + Enter, ESC to close):</p>
                         <div className="space-y-1 ml-2">
                             {suggestions.map((s, i) => (
                                 <button
@@ -174,16 +201,16 @@ export default function CommandLine({
                                     onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        acceptSuggestion(s.command);
+                                        submitSuggestion(s.command);
                                     }}
-                                    className={`w-full flex items-center gap-3 py-1 cursor-pointer select-none border-0 text-left transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
+                                    className={`w-full flex items-center gap-2 sm:gap-3 py-1.5 sm:py-1 cursor-pointer select-none border-0 text-left transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
                                         }`}
                                 >
                                     <span className="w-4 text-center shrink-0">
                                         {i === selectedIndex ? "❯" : ""}
                                     </span>
-                                    <span>{s.command}</span>
-                                    <span className={i === selectedIndex ? "opacity-80 font-normal ml-1" : "text-[11px] ml-1"}>— {s.description}</span>
+                                    <span className="shrink-0">{s.command}</span>
+                                    <span className={`hidden sm:inline ${i === selectedIndex ? "opacity-80 font-normal ml-1" : "text-[11px] ml-1"}`}>— {s.description}</span>
                                 </button>
                             ))}
                         </div>

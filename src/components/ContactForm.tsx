@@ -108,8 +108,8 @@ export default function ContactForm({ onSubmit, onCancel }: ContactFormProps) {
                 </div>
             )}
 
-            <div className={`flex gap-2 font-mono text-sm cursor-text group ${step === 2 ? 'items-start mt-1' : ''}`} onClick={() => inputRef.current?.focus()}>
-                <span className={`text-green w-32 shrink-0 ${step === 2 ? 'mt-0.5' : ''}`}>{prompts[step]}</span>
+            <div className={`flex gap-2 font-mono text-sm cursor-text group ${step === 2 ? 'items-start mt-1' : 'items-center'}`} onClick={() => inputRef.current?.focus()}>
+                <span className={`text-green w-24 sm:w-32 shrink-0 ${step === 2 ? 'mt-0.5' : ''}`}>{prompts[step]}</span>
                 {step === 2 ? (
                     <textarea
                         ref={inputRef}
@@ -135,7 +135,42 @@ export default function ContactForm({ onSubmit, onCancel }: ContactFormProps) {
                         placeholder="Type here..."
                     />
                 )}
+                {/* Mobile submit button */}
+                {currentInput.trim() && (
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            const val = currentInput.trim();
+                            if (!val) return;
+                            if (step === 0) {
+                                setEmail(val);
+                                setStep(1);
+                                setCurrentInput("");
+                            } else if (step === 1) {
+                                setSubject(val);
+                                setStep(2);
+                                setCurrentInput("");
+                            } else if (step === 2) {
+                                setMessage(val);
+                                setStep(3);
+                                setCurrentInput("");
+                                submitForm(email, subject, val);
+                            }
+                        }}
+                        className="shrink-0 px-2 py-1 text-xs font-mono text-accent border border-accent/30 rounded active:scale-95 transition-all sm:hidden cursor-pointer"
+                    >
+                        ↵
+                    </button>
+                )}
             </div>
+
+            {/* Mobile cancel button */}
+            <button
+                onClick={onCancel}
+                className="mt-3 px-3 py-1.5 text-xs font-mono text-error border border-error/30 rounded active:scale-95 transition-all sm:hidden cursor-pointer"
+            >
+                Cancel (ESC)
+            </button>
         </motion.div>
     );
 }
