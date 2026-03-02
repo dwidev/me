@@ -35,7 +35,7 @@ export function useTerminal() {
             setHistoryIndex(-1);
 
             // Handle clear
-            if (trimmed.toLowerCase() === "clear") {
+            if (trimmed.toLowerCase() === "clear" || trimmed.toLowerCase() === "/clear") {
                 setHistory([]);
                 return;
             }

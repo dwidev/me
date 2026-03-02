@@ -15,10 +15,10 @@ import ContactForm from "./ContactForm";
 import { useTerminal } from "@/hooks/useTerminal";
 
 const shortcuts = [
-    { key: "1", label: "About", command: "about" },
-    { key: "2", label: "Projects", command: "projects" },
-    { key: "3", label: "Socials", command: "socials" },
-    { key: "4", label: "Help", command: "help" },
+    { key: "1", label: "About", command: "/about" },
+    { key: "2", label: "Projects", command: "/projects" },
+    { key: "3", label: "Socials", command: "/socials" },
+    { key: "4", label: "Help", command: "/help" },
 ];
 
 export default function Terminal() {
@@ -64,7 +64,13 @@ export default function Terminal() {
 
     const handleCommand = useCallback(
         (input: string) => {
-            const cmd = input.trim().toLowerCase();
+            let cmdStr = input.trim().toLowerCase();
+            if (cmdStr.startsWith('/')) {
+                cmdStr = cmdStr.slice(1);
+            }
+            const parts = cmdStr.split(/\s+/);
+            const cmd = parts[0];
+            const hasArgs = parts.length > 1;
             if (!cmd) return;
 
             // Intercept game commands
@@ -73,15 +79,25 @@ export default function Terminal() {
                 return;
             }
 
-            // Intercept theme interactive selector
+            // Intercept theme — open selector only without args
             if (cmd === "theme") {
-                setIsThemeSelectorOpen(true);
+                if (hasArgs) {
+                    setIsStreaming(true);
+                    processCommand(input);
+                } else {
+                    setIsThemeSelectorOpen(true);
+                }
                 return;
             }
 
-            // Intercept language interactive selector
+            // Intercept language — open selector only without args
             if (cmd === "language") {
-                setIsLanguageSelectorOpen(true);
+                if (hasArgs) {
+                    setIsStreaming(true);
+                    processCommand(input);
+                } else {
+                    setIsLanguageSelectorOpen(true);
+                }
                 return;
             }
 
@@ -112,7 +128,7 @@ export default function Terminal() {
     const handleShortcut = useCallback(
         (command: string) => {
             if (isStreaming) return;
-            if (command === "more") {
+            if (command === "/more") {
                 setShowMoreMenu((prev) => !prev);
                 return;
             }
@@ -230,7 +246,7 @@ export default function Terminal() {
                                         {/* More Dropdown */}
                                         <div className="relative">
                                             <button
-                                                onClick={() => handleShortcut("more")}
+                                                onClick={() => handleShortcut("/more")}
                                                 disabled={isStreaming}
                                                 className={`px-3 py-1.5 text-xs font-mono border border-accent/20 rounded-md
                                                  text-accent transition-all duration-200 ${isStreaming
@@ -245,13 +261,13 @@ export default function Terminal() {
                                             {showMoreMenu && (
                                                 <div className="absolute top-full left-0 mt-2 bg-[#0A0A0A] border border-accent/20 rounded-md shadow-lg z-10 w-32 flex flex-col py-1">
                                                     <button
-                                                        onClick={() => handleShortcut("theme")}
+                                                        onClick={() => handleShortcut("/theme")}
                                                         className="px-4 py-2 text-xs font-mono text-left text-accent hover:bg-accent/10 transition-colors"
                                                     >
                                                         <span className="text-green">[t]</span> Theme
                                                     </button>
                                                     <button
-                                                        onClick={() => handleShortcut("game")}
+                                                        onClick={() => handleShortcut("/game")}
                                                         className="px-4 py-2 text-xs font-mono text-left text-accent hover:bg-accent/10 transition-colors"
                                                     >
                                                         <span className="text-green">[g]</span> Game
@@ -282,7 +298,7 @@ export default function Terminal() {
                                                 onSelect={(themeId) => {
                                                     setIsThemeSelectorOpen(false);
                                                     setIsStreaming(true);
-                                                    processCommand(`theme ${themeId}`);
+                                                    processCommand(`/theme ${themeId}`);
                                                 }}
                                                 onCancel={() => {
                                                     setIsThemeSelectorOpen(false);
@@ -293,7 +309,7 @@ export default function Terminal() {
                                                 onSelect={(langId) => {
                                                     setIsLanguageSelectorOpen(false);
                                                     setIsStreaming(true);
-                                                    processCommand(`language ${langId}`);
+                                                    processCommand(`/language ${langId}`);
                                                 }}
                                                 onCancel={() => {
                                                     setIsLanguageSelectorOpen(false);

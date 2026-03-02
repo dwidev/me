@@ -7,17 +7,17 @@ import ProjectImages from "@/components/ProjectImages";
 
 function HelpOutput() {
     const commands = [
-        { cmd: "help", desc: "Show available commands" },
-        { cmd: "about", desc: "Learn about me" },
-        { cmd: "whoami", desc: "Display user identity" },
-        { cmd: "projects", desc: "View my projects" },
-        { cmd: "ls", desc: "Alias for projects" },
-        { cmd: "socials", desc: "Find me online" },
-        { cmd: "education", desc: "View my educational background" },
-        { cmd: "experience", desc: "View my work experience" },
-        { cmd: "contact", desc: "Send me a message" },
-        { cmd: "more", desc: "Show more options" },
-        { cmd: "clear", desc: "Clear the terminal" },
+        { cmd: "/help", desc: "Show available commands" },
+        { cmd: "/about", desc: "Learn about me" },
+        { cmd: "/whoami", desc: "Display user identity" },
+        { cmd: "/projects", desc: "View my projects" },
+        { cmd: "/ls", desc: "Alias for projects" },
+        { cmd: "/socials", desc: "Find me online" },
+        { cmd: "/education", desc: "View my educational background" },
+        { cmd: "/experience", desc: "View my work experience" },
+        { cmd: "/contact", desc: "Send me a message" },
+        { cmd: "/more", desc: "Show more options" },
+        { cmd: "/clear", desc: "Clear the terminal" },
     ];
 
     return (
@@ -194,7 +194,7 @@ function ErrorOutput({ input }: { input: string }) {
             <p className="text-error">
                 zsh: command not found: {input}.{" "}
                 <span className="text-muted">
-                    Did you mean &apos;<span className="text-green">help</span>&apos;?
+                    Did you mean &apos;<span className="text-green">/help</span>&apos;?
                 </span>
             </p>
         </div>
@@ -238,7 +238,7 @@ function ThemeOutput({ args }: { args: string[] }) {
     if (!themeTarget) {
         return (
             <div className="space-y-2">
-                <p className="text-accent font-bold">Usage: theme [name]</p>
+                <p className="text-accent font-bold">Usage: /theme [name]</p>
                 <div className="space-y-1">
                     <p className="text-muted">Available themes:</p>
                     <div className="flex flex-wrap gap-3">
@@ -295,7 +295,7 @@ function LanguageOutput({ args }: { args: string[] }) {
     if (!langTarget) {
         return (
             <div className="space-y-2">
-                <p className="text-accent font-bold">Usage: language [code]</p>
+                <p className="text-accent font-bold">Usage: /language [code]</p>
                 <div className="space-y-1">
                     <p className="text-muted">Available languages:</p>
                     <div className="flex flex-wrap gap-3">
@@ -389,34 +389,45 @@ export function getCommandSuggestions(
     partial: string
 ): { command: string; description: string }[] {
     const trimmed = partial.trim().toLowerCase();
-    if (!trimmed) return [];
 
+    // Auto-suggest only appears if input begins with '/'
+    if (!trimmed.startsWith("/")) return [];
+
+    const search = trimmed.slice(1);
     const hiddenCommands = ["theme", "language", "game"];
 
     const allCommands = Object.entries(commandRegistry)
         .filter(([cmd]) => !hiddenCommands.includes(cmd))
         .map(([cmd, handler]) => ({
-            command: cmd,
+            command: `/${cmd}`,
             description: handler.description,
         }));
 
+    if (!search) {
+        return allCommands;
+    }
+
     // Prefix matches first, then includes matches
     const prefixMatches = allCommands.filter(
-        (c) => c.command.startsWith(trimmed) && c.command !== trimmed
+        (c) => c.command.slice(1).startsWith(search) && c.command.slice(1) !== search
     );
     const includesMatches = allCommands.filter(
         (c) =>
-            c.command.includes(trimmed) &&
-            !c.command.startsWith(trimmed) &&
-            c.command !== trimmed
+            c.command.slice(1).includes(search) &&
+            !c.command.slice(1).startsWith(search) &&
+            c.command.slice(1) !== search
     );
 
     return [...prefixMatches, ...includesMatches];
 }
 
 export function executeCommand(input: string): React.ReactNode {
-    const trimmed = input.trim().toLowerCase();
+    let trimmed = input.trim().toLowerCase();
     if (!trimmed) return null;
+
+    if (trimmed.startsWith('/')) {
+        trimmed = trimmed.slice(1).trim();
+    }
 
     const [cmd, ...args] = trimmed.split(/\s+/);
     const handler = commandRegistry[cmd];
@@ -425,5 +436,5 @@ export function executeCommand(input: string): React.ReactNode {
         return handler.handler(args);
     }
 
-    return <ErrorOutput input={trimmed} />;
+    return <ErrorOutput input={input.trim()} />;
 }

@@ -78,7 +78,8 @@ export default function CommandLine({
                 );
             } else {
                 e.preventDefault();
-                const prev = onNavigate("up");
+                let prev = onNavigate("up");
+                if (prev && !prev.startsWith('/')) prev = '/' + prev;
                 setInput(prev);
                 setShowSuggestions(false);
             }
@@ -90,7 +91,8 @@ export default function CommandLine({
                 );
             } else {
                 e.preventDefault();
-                const next = onNavigate("down");
+                let next = onNavigate("down");
+                if (next && !next.startsWith('/')) next = '/' + next;
                 setInput(next);
                 setShowSuggestions(false);
             }
@@ -103,6 +105,9 @@ export default function CommandLine({
     };
 
     const handleChange = (value: string) => {
+        if (value.length > 0 && !value.startsWith('/')) {
+            value = '/' + value;
+        }
         setInput(value);
         if (!showSuggestions) setShowSuggestions(true);
     };
@@ -155,35 +160,33 @@ export default function CommandLine({
             <AnimatePresence>
                 {suggestions.length > 0 && (
                     <motion.div
-                        initial={{ opacity: 0, y: -4 }}
+                        initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
+                        exit={{ opacity: 0, y: 5 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
-                        className="mt-1 ml-[calc(1ch)] border border-white/[0.08] rounded-md bg-[#141414] overflow-hidden shadow-lg shadow-black/30"
+                        className="mt-2 space-y-1 font-mono text-sm ml-2"
                     >
-                        {suggestions.map((s, i) => (
-                            <button
-                                key={s.command}
-                                onClick={() => acceptSuggestion(s.command)}
-                                className={`w-full flex items-center gap-3 px-3 py-1.5 text-xs font-mono transition-colors cursor-pointer border-0 text-left ${i === selectedIndex
-                                    ? "bg-accent/10 text-accent"
-                                    : "text-text hover:bg-white/[0.04]"
-                                    }`}
-                            >
-                                <span
-                                    className={`shrink-0 ${i === selectedIndex ? "text-accent" : "text-green"
+                        <p className="text-accent font-bold mt-2 text-sm mb-2">Available commands (Use arrow keys + Tab/Enter to autocomplete, ESC to close):</p>
+                        <div className="space-y-1 ml-2">
+                            {suggestions.map((s, i) => (
+                                <button
+                                    key={s.command}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        acceptSuggestion(s.command);
+                                    }}
+                                    className={`w-full flex items-center gap-3 py-1 cursor-pointer select-none border-0 text-left transition-colors ${i === selectedIndex ? "text-green font-bold" : "text-muted hover:text-text/70"
                                         }`}
                                 >
-                                    {s.command}
-                                </span>
-                                <span className="text-muted text-[11px]">{s.description}</span>
-                                {i === selectedIndex && (
-                                    <span className="ml-auto text-muted/40 text-[10px] shrink-0">
-                                        TAB ↵
+                                    <span className="w-4 text-center shrink-0">
+                                        {i === selectedIndex ? "❯" : ""}
                                     </span>
-                                )}
-                            </button>
-                        ))}
+                                    <span>{s.command}</span>
+                                    <span className={i === selectedIndex ? "opacity-80 font-normal ml-1" : "text-[11px] ml-1"}>— {s.description}</span>
+                                </button>
+                            ))}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
