@@ -201,7 +201,7 @@ function ErrorOutput({ input }: { input: string }) {
     );
 }
 
-const availableThemes = ["dark", "light", "dracula", "hacker", "retro"];
+const availableThemes = ["dark", "light", "dracula", "hacker", "retro", "monochrome"];
 
 function ThemeOutput({ args }: { args: string[] }) {
     const [status, setStatus] = useState<"processing" | "success" | "invalid">("processing");

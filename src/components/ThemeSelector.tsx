@@ -9,6 +9,7 @@ const themes = [
     { id: "dracula", label: "Dracula" },
     { id: "hacker", label: "Hacker" },
     { id: "retro", label: "Retro" },
+    { id: "monochrome", label: "Monochrome" },
 ];
 
 interface ThemeSelectorProps {

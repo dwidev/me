@@ -66,6 +66,17 @@
   --theme-surface: #3E2F23;
 }
 
+/* ── Monochrome Theme (Soft Black & White) ─────────── */
+.theme-monochrome {
+  --theme-bg: #1A1A1A;
+  --theme-text: #E8E8E8;
+  --theme-accent: #FFFFFF;
+  --theme-green: #D4D4D4;
+  --theme-error: #A0A0A0;
+  --theme-muted: #6E6E6E;
+  --theme-surface: #222222;
+}
+
 /* ── Default Base Styles ───────────────────────────── */
 * {
   box-sizing: border-box;

@@ -35,7 +35,7 @@ export const projects: Project[] = [
         techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
         images: ["/projects/terminal-portfolio.png", "/projects/task-manager.png", "/projects/mobile-banking.png", "/projects/ai-chatbot.png", "/projects/terminal-portfolio.png"],
         liveUrl: "https://dwifahmi.dev",
-        repoUrl: "https://github.com/dwifahmi/portfolio",
+        repoUrl: "https://github.com/dwidev/me",
     },
     {
         slug: "task-manager",
@@ -69,7 +69,7 @@ export const projects: Project[] = [
 export const socials: SocialLink[] = [
     {
         name: "GitHub",
-        url: "https://github.com/dwifahmi",
+        url: "https://github.com/dwidev",
         icon: "◆",
     },
     {
@@ -84,7 +84,7 @@ export const socials: SocialLink[] = [
     },
     {
         name: "Email",
-        url: "mailto:hello@dwifahmi.dev",
+        url: "mailto:fahmidwi45@gmail.com",
         icon: "✉",
     },
 ];
