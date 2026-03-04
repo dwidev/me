@@ -27,7 +27,7 @@ export interface Project {
 export interface SocialLink {
     name: string;
     url: string;
-    icon: string;
+    icon: string | ReactNode;
 }
 
 export interface Education {

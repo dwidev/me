@@ -1,4 +1,6 @@
+import { ReactNode } from "react";
 import { Project, SocialLink, Education, Experience } from "@/types/terminal";
+import { FiGithub, FiLinkedin, FiTwitter, FiAtSign, FiMail } from "react-icons/fi";
 
 export const profile = {
     name: "Fahmi Dwi Syahputra",
@@ -123,22 +125,27 @@ export const socials: SocialLink[] = [
     {
         name: "GitHub",
         url: "https://github.com/dwidev",
-        icon: "◆",
+        icon: <FiGithub />,
     },
     {
         name: "LinkedIn",
-        url: "https://linkedin.com/in/dwifahmi",
-        icon: "◇",
+        url: "https://www.linkedin.com/in/fahmi-dwi-syahputra-995994130/",
+        icon: <FiLinkedin />,
     },
     {
         name: "Twitter / X",
-        url: "https://x.com/dwifahmi",
-        icon: "✦",
+        url: "https://x.com/dwifhmi",
+        icon: <FiTwitter />,
+    },
+    {
+        name: "Thread",
+        url: "https://www.threads.com/@dwifhmi",
+        icon: <FiAtSign />,
     },
     {
         name: "Email",
         url: "mailto:fahmidwi45@gmail.com",
-        icon: "✉",
+        icon: <FiMail />,
     },
 ];
 

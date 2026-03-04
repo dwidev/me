@@ -143,20 +143,27 @@ function ProjectsOutput() {
 
 function SocialsOutput() {
     return (
-        <div className="space-y-2">
+        <div className="space-y-3">
             <p className="text-accent font-bold">Find me online:</p>
             {socials.map((social) => (
                 <div key={social.name} className="flex items-center gap-3">
-                    <span className="text-green w-4 text-center">{social.icon}</span>
+                    <span className="text-green w-5 flex justify-center text-base">{social.icon}</span>
                     <a
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent hover:underline"
+                        className="text-accent hover:underline font-bold w-24 shrink-0"
                     >
                         {social.name}
                     </a>
-                    <span className="text-muted text-xs">{social.url}</span>
+                    <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted text-xs hover:text-green hover:underline truncate italic"
+                    >
+                        {social.url}
+                    </a>
                 </div>
             ))}
         </div>
