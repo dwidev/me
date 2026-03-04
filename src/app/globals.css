@@ -13,13 +13,13 @@
 
 /* ── Base Theme (Dark / Default) ────────────────────── */
 :root {
-  --theme-bg: #1E1E2E;
-  --theme-text: #CDD6F4;
-  --theme-accent: #89B4FA;
-  --theme-green: #A6E3A1;
-  --theme-error: #F38BA8;
-  --theme-muted: #6C7086;
-  --theme-surface: #181825;
+  --theme-bg: #1A1A1A;
+  --theme-text: #E8E8E8;
+  --theme-accent: #FFFFFF;
+  --theme-green: #D4D4D4;
+  --theme-error: #A0A0A0;
+  --theme-muted: #6E6E6E;
+  --theme-surface: #222222;
 }
 
 /* ── Light Theme ────────────────────────────────────── */
@@ -66,15 +66,15 @@
   --theme-surface: #3E2F23;
 }
 
-/* ── Monochrome Theme (Soft Black & White) ─────────── */
-.theme-monochrome {
-  --theme-bg: #1A1A1A;
-  --theme-text: #E8E8E8;
-  --theme-accent: #FFFFFF;
-  --theme-green: #D4D4D4;
-  --theme-error: #A0A0A0;
-  --theme-muted: #6E6E6E;
-  --theme-surface: #222222;
+/* ── Lavender Theme (Soft Black & White) ─────────── */
+.theme-lavender {
+  --theme-bg: #1E1E2E;
+  --theme-text: #CDD6F4;
+  --theme-accent: #89B4FA;
+  --theme-green: #A6E3A1;
+  --theme-error: #F38BA8;
+  --theme-muted: #6C7086;
+  --theme-surface: #181825;
 }
 
 /* ── Default Base Styles ───────────────────────────── */

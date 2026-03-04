@@ -5,6 +5,7 @@ import { CommandHandler } from "@/types/terminal";
 import { profile, projects, socials, education, experience } from "@/lib/mockData";
 import ProjectImages from "@/components/ProjectImages";
 import { applyTheme } from "@/lib/themeUtils";
+import Image from "next/image";
 
 function HelpOutput() {
     const commands = [
@@ -42,8 +43,20 @@ function HelpOutput() {
 function AboutOutput() {
     return (
         <div className="space-y-3">
-            <p className="text-accent font-bold text-lg">{profile.name}</p>
-            <p className="text-green">{profile.title}</p>
+            <div className="flex items-center gap-3">
+                <div className="w-20 h-20 rounded-full overflow-hidden relative border border-accent/20">
+                    <Image
+                        src="/photo/pp.jpeg"
+                        alt={profile.name}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
+                <div>
+                    <p className="text-accent font-bold text-lg">{profile.name}</p>
+                    <p className="text-green">{profile.title}</p>
+                </div>
+            </div>
             <div className="space-y-1">
                 {profile.bio.map((line, i) => (
                     <p key={i} className="text-text">
@@ -216,7 +229,7 @@ function ErrorOutput({ input }: { input: string }) {
     );
 }
 
-const availableThemes = ["dark", "light", "dracula", "hacker", "retro", "monochrome"];
+const availableThemes = ["dark", "light", "dracula", "hacker", "retro", "lavender"];
 
 function ThemeOutput({ args }: { args: string[] }) {
     const [status, setStatus] = useState<"processing" | "success" | "invalid">("processing");
