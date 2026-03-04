@@ -35,24 +35,37 @@ export default function Terminal() {
     const [isContactFormOpen, setIsContactFormOpen] = useState(false);
     const [showMoreMenu, setShowMoreMenu] = useState(false);
 
-    // Auto-scroll to bottom
-    useEffect(() => {
-        const scrollToBottom = () => {
-            if (!scrollRef.current || gameMode) return;
+    // Auto-scroll function
+    const scrollToBottom = useCallback((smooth = false) => {
+        if (!scrollRef.current) return;
 
-            // Follow the streaming cursor if it exists
-            if (isStreaming) {
-                const cursor = scrollRef.current.querySelector(".animate-blink");
-                if (cursor) {
-                    cursor.scrollIntoView({ behavior: "auto", block: "nearest" });
-                }
-                // Do not fallback to scrollHeight while streaming
-                return;
+        if (smooth) {
+            setTimeout(() => {
+                scrollRef.current?.scrollTo({
+                    top: scrollRef.current.scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 50);
+            return;
+        }
+
+        // Follow the streaming cursor if it exists
+        if (isStreaming) {
+            const cursor = scrollRef.current.querySelector(".animate-blink");
+            if (cursor) {
+                cursor.scrollIntoView({ behavior: "auto", block: "nearest" });
             }
+            // Do not fallback to scrollHeight while streaming
+            return;
+        }
 
-            // Otherwise, jump to the end of the content
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        };
+        // Otherwise, jump to the end of the content
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }, [isStreaming]);
+
+    // Auto-scroll effect
+    useEffect(() => {
+        if (gameMode) return;
 
         // Scroll immediately on any state change
         scrollToBottom();
@@ -66,7 +79,7 @@ export default function Terminal() {
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [history, isBooting, showWelcome, gameMode, isStreaming]);
+    }, [history, isBooting, showWelcome, gameMode, isStreaming, scrollToBottom]);
 
     const handleBootComplete = useCallback(() => {
         finishBoot();
@@ -104,6 +117,7 @@ export default function Terminal() {
                     processCommand(input);
                 } else {
                     setIsThemeSelectorOpen(true);
+                    scrollToBottom(true);
                 }
                 return;
             }
@@ -115,6 +129,7 @@ export default function Terminal() {
                     processCommand(input);
                 } else {
                     setIsLanguageSelectorOpen(true);
+                    scrollToBottom(true);
                 }
                 return;
             }
@@ -122,18 +137,21 @@ export default function Terminal() {
             // Intercept more options menu
             if (cmd === "more") {
                 setIsMoreSelectorOpen(true);
+                scrollToBottom(true);
                 return;
             }
 
             // Intercept contact form
             if (cmd === "contact") {
                 setIsContactFormOpen(true);
+                scrollToBottom(true);
                 return;
             }
 
             // 'clear' command doesn't generate output stream, just clears history
             if (cmd === "clear") {
                 processCommand(input);
+                processCommand("about");
                 return;
             }
 
