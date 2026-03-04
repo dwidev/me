@@ -92,11 +92,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Lock body on mobile to prevent double scroll */
+/* Lock body on mobile to prevent double scroll (terminal page only) */
 @media (max-width: 767px) {
 
-  html,
-  body {
+  html:has(.terminal-lock),
+  .terminal-lock {
     height: 100dvh;
     overflow: hidden;
     position: fixed;

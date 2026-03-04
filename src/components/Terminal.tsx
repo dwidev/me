@@ -65,6 +65,14 @@ export default function Terminal() {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }, [isStreaming]);
 
+    // Lock body scroll on mobile (terminal page only)
+    useEffect(() => {
+        document.body.classList.add("terminal-lock");
+        return () => {
+            document.body.classList.remove("terminal-lock");
+        };
+    }, []);
+
     // Auto-scroll effect
     useEffect(() => {
         if (gameMode) return;
