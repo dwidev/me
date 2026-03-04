@@ -38,9 +38,20 @@ export default function Terminal() {
     // Auto-scroll to bottom
     useEffect(() => {
         const scrollToBottom = () => {
-            if (scrollRef.current && !gameMode) {
-                scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            if (!scrollRef.current || gameMode) return;
+
+            // Follow the streaming cursor if it exists
+            if (isStreaming) {
+                const cursor = scrollRef.current.querySelector(".animate-blink");
+                if (cursor) {
+                    cursor.scrollIntoView({ behavior: "auto", block: "nearest" });
+                }
+                // Do not fallback to scrollHeight while streaming
+                return;
             }
+
+            // Otherwise, jump to the end of the content
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         };
 
         // Scroll immediately on any state change
