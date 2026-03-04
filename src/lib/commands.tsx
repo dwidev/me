@@ -17,7 +17,7 @@ function HelpOutput() {
         // { cmd: "/education", desc: "View my educational background" },
         { cmd: "/experience", desc: "View my work experience" },
         { cmd: "/contact", desc: "Send me a message" },
-        { cmd: "/more", desc: "Show more options" },
+        { cmd: "/gui", desc: "Switch to GUI Portfolio Mode" },
         { cmd: "/clear", desc: "Clear the terminal" },
     ];
 
@@ -384,6 +384,10 @@ export const commandRegistry: Record<string, CommandHandler> = {
         description: "Send me a message",
         handler: () => null, // Intercepted by Terminal for contact form
     },
+    gui: {
+        description: "Switch to GUI Portfolio Mode",
+        handler: () => null, // Intercepted by Terminal for routing
+    },
     clear: {
         description: "Clear the terminal",
         handler: () => null,
@@ -399,7 +403,7 @@ export function getCommandSuggestions(
     if (!trimmed.startsWith("/")) return [];
 
     const search = trimmed.slice(1);
-    const hiddenCommands = ["theme", "language", "game"];
+    const hiddenCommands = ["theme", "language", "game", "gui"];
 
     const allCommands = Object.entries(commandRegistry)
         .filter(([cmd]) => !hiddenCommands.includes(cmd))

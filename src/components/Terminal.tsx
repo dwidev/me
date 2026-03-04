@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import TerminalHeader from "./TerminalHeader";
 import BootSequence from "./BootSequence";
@@ -22,6 +23,7 @@ const shortcuts = [
 ];
 
 export default function Terminal() {
+    const router = useRouter();
     const { history, isBooting, processCommand, navigateHistory, finishBoot } =
         useTerminal();
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -110,6 +112,11 @@ export default function Terminal() {
                 return;
             }
 
+            if (cmd === "gui") {
+                router.push("/gui");
+                return;
+            }
+
             // Intercept theme — open selector only without args
             if (cmd === "theme") {
                 if (hasArgs) {
@@ -158,7 +165,7 @@ export default function Terminal() {
             setIsStreaming(true);
             processCommand(input);
         },
-        [processCommand]
+        [processCommand, router]
     );
 
     const handleShortcut = useCallback(
@@ -223,8 +230,8 @@ export default function Terminal() {
                         layout: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
                     }}
                     className={`terminal-window overflow-hidden flex flex-col ${isFullscreen
-                        ? "rounded-none border-0 h-[100dvh]"
-                        : "rounded-none border-0 h-[100dvh] md:rounded-xl md:border md:border-white/[0.06] md:h-[80vh]"
+                        ? "rounded-none border-0 h-dvh"
+                        : "rounded-none border-0 h-dvh md:rounded-xl md:border md:border-white/6 md:h-[80vh]"
                         }`}
                 >
                     <TerminalHeader

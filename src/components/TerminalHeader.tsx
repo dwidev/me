@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FiLayout } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 interface TerminalHeaderProps {
     title?: string;
@@ -13,6 +15,8 @@ export default function TerminalHeader({
     isFullscreen,
     onToggleFullscreen,
 }: TerminalHeaderProps) {
+    const router = useRouter();
+
     return (
         <div
             className={`flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-white/5 select-none ${isFullscreen ? "" : "rounded-t-xl"
@@ -44,7 +48,15 @@ export default function TerminalHeader({
             </div>
 
             {/* Spacer to center title */}
-            <div className="w-[52px]" />
+            <div className="w-[52px] flex justify-end">
+                <button
+                    onClick={() => router.push("/gui")}
+                    className="text-muted hover:text-accent transition-colors p-1"
+                    title="Switch to GUI Mode"
+                >
+                    <FiLayout size={16} />
+                </button>
+            </div>
         </div>
     );
 }
