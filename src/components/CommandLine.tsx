@@ -19,6 +19,7 @@ export default function CommandLine({
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [showSuggestions, setShowSuggestions] = useState(true);
     const inputRef = useRef<HTMLInputElement>(null);
+    const bottomRef = useRef<HTMLDivElement>(null);
 
     const suggestions = useMemo(() => {
         if (!showSuggestions) return [];
@@ -36,9 +37,15 @@ export default function CommandLine({
         return "";
     }, [suggestions, input, selectedIndex]);
 
-    // Reset selected index when suggestions change
     useEffect(() => {
         setSelectedIndex(0);
+
+        // Auto scroll when suggestions dropdown appears/changes
+        if (suggestions.length > 0) {
+            setTimeout(() => {
+                bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }, 50);
+        }
     }, [suggestions.length]);
 
     useEffect(() => {
@@ -217,6 +224,7 @@ export default function CommandLine({
                     </motion.div>
                 )}
             </AnimatePresence>
+            <div ref={bottomRef} />
         </div>
     );
 }
