@@ -187,8 +187,8 @@ textarea {
     font-size: 16px !important;
   }
 
-  /* Slightly larger tap targets */
-  button {
+  /* Slightly larger tap targets (exclude traffic light dots) */
+  button:not(.traffic-dot) {
     min-height: 36px;
   }
 

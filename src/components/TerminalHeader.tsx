@@ -25,17 +25,17 @@ export default function TerminalHeader({
             {/* Traffic light dots */}
             <div className="flex gap-2">
                 <motion.button
-                    className="w-3 h-3 rounded-full bg-[#ff5f57] cursor-pointer border-0 p-0"
+                    className="traffic-dot w-3 h-3 rounded-full bg-[#ff5f57] cursor-pointer border-0 p-0"
                     whileHover={{ scale: 1.2 }}
                     aria-label="Close"
                 />
                 <motion.button
-                    className="w-3 h-3 rounded-full bg-[#febc2e] cursor-pointer border-0 p-0"
+                    className="traffic-dot w-3 h-3 rounded-full bg-[#febc2e] cursor-pointer border-0 p-0"
                     whileHover={{ scale: 1.2 }}
                     aria-label="Minimize"
                 />
                 <motion.button
-                    className="w-3 h-3 rounded-full bg-[#28c840] cursor-pointer border-0 p-0"
+                    className="traffic-dot w-3 h-3 rounded-full bg-[#28c840] cursor-pointer border-0 p-0"
                     whileHover={{ scale: 1.2 }}
                     onClick={onToggleFullscreen}
                     aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
