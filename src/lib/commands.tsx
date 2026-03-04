@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { CommandHandler } from "@/types/terminal";
 import { profile, projects, socials, education, experience } from "@/lib/mockData";
 import ProjectImages from "@/components/ProjectImages";
+import { applyTheme } from "@/lib/themeUtils";
 
 function HelpOutput() {
     const commands = [
@@ -228,19 +229,9 @@ function ThemeOutput({ args }: { args: string[] }) {
         }
 
         if (availableThemes.includes(themeTarget)) {
-            // Apply theme
-            const root = document.documentElement;
-            // Remove previous theme classes
-            root.classList.forEach((cls) => {
-                if (cls.startsWith("theme-")) {
-                    root.classList.remove(cls);
-                }
-            });
-            // Default "dark" means no extra class needed
-            if (themeTarget !== "dark") {
-                root.classList.add(`theme-${themeTarget}`);
-            }
+
             localStorage.setItem("portfolio-theme", themeTarget);
+            applyTheme(themeTarget);
             setStatus("success");
         } else {
             setStatus("invalid");

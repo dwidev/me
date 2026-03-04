@@ -13,13 +13,13 @@
 
 /* ── Base Theme (Dark / Default) ────────────────────── */
 :root {
-  --theme-bg: #0A0A0A;
-  --theme-text: #E0E0E0;
-  --theme-accent: #3B82F6;
-  --theme-green: #10B981;
-  --theme-error: #EF4444;
-  --theme-muted: #6B7280;
-  --theme-surface: #111111;
+  --theme-bg: #1E1E2E;
+  --theme-text: #CDD6F4;
+  --theme-accent: #89B4FA;
+  --theme-green: #A6E3A1;
+  --theme-error: #F38BA8;
+  --theme-muted: #6C7086;
+  --theme-surface: #181825;
 }
 
 /* ── Light Theme ────────────────────────────────────── */
