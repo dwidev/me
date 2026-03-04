@@ -365,10 +365,10 @@ export const commandRegistry: Record<string, CommandHandler> = {
         description: "Find me online",
         handler: () => <SocialsOutput />,
     },
-    education: {
-        description: "View my educational background",
-        handler: () => <EducationOutput />,
-    },
+    // education: {
+    //     description: "View my educational background",
+    //     handler: () => <EducationOutput />,
+    // },
     experience: {
         description: "View my work experience",
         handler: () => <ExperienceOutput />,
