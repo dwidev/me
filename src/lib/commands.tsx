@@ -13,7 +13,7 @@ function HelpOutput() {
         { cmd: "/projects", desc: "View my projects" },
         { cmd: "/ls", desc: "Alias for projects" },
         { cmd: "/socials", desc: "Find me online" },
-        { cmd: "/education", desc: "View my educational background" },
+        // { cmd: "/education", desc: "View my educational background" },
         { cmd: "/experience", desc: "View my work experience" },
         { cmd: "/contact", desc: "Send me a message" },
         { cmd: "/more", desc: "Show more options" },
@@ -85,48 +85,55 @@ function WhoamiOutput() {
 
 function ProjectsOutput() {
     return (
-        <div className="space-y-5">
-            <p className="text-accent font-bold">
+        <div className="space-y-6">
+            <p className="text-accent font-bold mb-4">
                 Projects ({projects.length} total):
             </p>
             {projects.map((project) => (
-                <div key={project.slug} className="pl-1 space-y-2">
-                    <p className="text-green font-bold">{project.title}</p>
-                    <p className="text-text text-sm">{project.description}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-1">
-                        {project.techStack.map((tech) => (
-                            <span
-                                key={tech}
-                                className="px-1.5 py-0.5 text-xs bg-green/10 text-green rounded"
-                            >
-                                {tech}
-                            </span>
-                        ))}
+                <div key={project.slug} className="relative pl-3 border-l-2 border-white/5 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-between items-start">
+                    {/* Left Side: Details */}
+                    <div className="flex-1 space-y-2">
+                        <p className="text-green font-bold text-base">{project.title}</p>
+                        <p className="text-text text-sm leading-relaxed">{project.description}</p>
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                            {project.techStack.map((tech) => (
+                                <span
+                                    key={tech}
+                                    className="px-1.5 py-0.5 text-[11px] bg-green/10 border border-green/20 text-green rounded"
+                                >
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                        <div className="flex gap-4 pt-2">
+                            {project.repoUrl && (
+                                <a
+                                    href={project.repoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-accent text-xs font-bold hover:underline"
+                                >
+                                    → Repository
+                                </a>
+                            )}
+                            {project.liveUrl && (
+                                <a
+                                    href={project.liveUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-accent text-xs font-bold hover:underline"
+                                >
+                                    → Live Preview
+                                </a>
+                            )}
+                        </div>
                     </div>
-                    <div className="flex gap-4 mt-1">
-                        {project.repoUrl && (
-                            <a
-                                href={project.repoUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-accent text-xs hover:underline"
-                            >
-                                → repo
-                            </a>
-                        )}
-                        {project.liveUrl && (
-                            <a
-                                href={project.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-accent text-xs hover:underline"
-                            >
-                                → live
-                            </a>
-                        )}
-                    </div>
+
+                    {/* Right Side: Image Preview */}
                     {project.images && project.images.length > 0 && (
-                        <ProjectImages images={project.images} alt={project.title} />
+                        <div className="shrink-0 pt-1">
+                            <ProjectImages images={[project.images[0]]} alt={project.title} liveUrl={project.liveUrl} />
+                        </div>
                     )}
                 </div>
             ))}

@@ -28,42 +28,95 @@ export const profile = {
 
 export const projects: Project[] = [
     {
-        slug: "terminal-portfolio",
-        title: "Terminal Portfolio",
+        slug: "ams",
+        title: "AMS by Tokio Marine ID",
         description:
-            "A CLI-style portfolio website built with Next.js 15 and Framer Motion. You're looking at it right now.",
-        techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-        images: ["/projects/terminal-portfolio.png", "/projects/task-manager.png", "/projects/mobile-banking.png", "/projects/ai-chatbot.png", "/projects/terminal-portfolio.png"],
-        liveUrl: "https://dwifahmi.dev",
-        repoUrl: "https://github.com/dwidev/me",
+            "AMS stands for Activity Management System, an application used by agents at Tokio Marine Indonesia to assist in managing the mandate process for customers interested in insurance products, from data entry to data approval.",
+        techStack: ["Flutter", "Dart", "Firebase", "Provider", "REST", "gRPC", "Clean Architecture"],
+        images: ["/projects/ams.png"],
+        liveUrl: "https://ams.example.com",
     },
     {
-        slug: "task-manager",
-        title: "Task Manager Pro",
+        slug: "superman-app",
+        title: "SuperMan APP",
         description:
-            "A full-stack task management app with real-time sync and team collaboration features.",
-        techStack: ["React", "Node.js", "PostgreSQL", "WebSocket"],
-        images: ["/projects/task-manager.png", "/projects/terminal-portfolio.png", "/projects/ai-chatbot.png", "/projects/mobile-banking.png", "/projects/task-manager.png"],
-        repoUrl: "https://github.com/dwifahmi/task-manager",
+            "The Superman App is an application designed to assist in the management and validation process of items needed in the construction of Telkom towers or poles. This application can help manage inventory items, verify the quality of items, and ensure the availability of necessary items for the construction project.",
+        techStack: ["Flutter", "Dart", "Firebase", "GetX", "REST", "GetX Architecture"],
+        images: ["/projects/superman-app.png"],
+        liveUrl: "https://superman-app.example.com",
     },
     {
-        slug: "mobile-banking",
-        title: "Mobile Banking App",
+        slug: "fund-group",
+        title: "Fundrising - Group",
         description:
-            "A secure mobile banking application with biometric auth and instant transfers.",
-        techStack: ["Flutter", "Dart", "Firebase", "REST API"],
-        images: ["/projects/mobile-banking.png", "/projects/ai-chatbot.png", "/projects/terminal-portfolio.png", "/projects/task-manager.png", "/projects/mobile-banking.png"],
+            "This fundraising group is an application for making donations that provides merchant vouchers if there are users who make a donation.",
+        techStack: ["Flutter", "Dart", "Firebase", "Bloc", "REST", "Bloc Architecture"],
+        images: ["/projects/fund-group.png"],
+        liveUrl: "https://fund-group.example.com",
     },
     {
-        slug: "ai-chatbot",
-        title: "AI Chatbot Platform",
+        slug: "fund-supporter",
+        title: "Fundrising - Supporter",
         description:
-            "An intelligent chatbot builder with NLP integration and analytics dashboard.",
-        techStack: ["Python", "FastAPI", "React", "OpenAI"],
-        images: ["/projects/ai-chatbot.png", "/projects/mobile-banking.png", "/projects/task-manager.png", "/projects/terminal-portfolio.png", "/projects/ai-chatbot.png"],
-        repoUrl: "https://github.com/dwifahmi/chatbot",
-        liveUrl: "https://chatbot.dwifahmi.dev",
+            "Fundraising Supporter is an application used to redeem vouchers after users make a donation on a fundraising campaign website.",
+        techStack: ["Flutter", "Dart", "Firebase", "Bloc", "REST", "Bloc Architecture"],
+        images: ["/projects/fund-supporter.png"],
+        liveUrl: "https://fund-supporter.example.com",
     },
+    {
+        slug: "cscom-web",
+        title: "Career Support - Company Website",
+        description:
+            "Career Support Company is an website portal that can help companies publish job vacancies and find the best candidates for their company. This application is connected to a candidate portal.",
+        techStack: ["Vue JS"],
+        images: ["/projects/cscom-web.png"],
+        liveUrl: "https://cscom.example.com",
+    },
+    {
+        slug: "csc",
+        title: "Career Support - Candidate",
+        description:
+            "Career Support Candidate is an application aimed to assist students or the general public in finding job vacancies. This application is also connected to corporate and school portals to provide better support.",
+        techStack: ["Flutter"],
+        images: ["/projects/csc.png"],
+        liveUrl: "https://csc.example.com",
+    },
+    {
+        slug: "csm",
+        title: "Career Support - Company",
+        description:
+            "Career Support Company is an application that can help companies publish job vacancies and find the best candidates for their company. This application is connected to a candidate portal.",
+        techStack: ["Flutter", "Dart", "Firebase", "Bloc", "REST", "Bloc Architecture"],
+        images: ["/projects/csm.png"],
+        liveUrl: "https://csm.example.com",
+    },
+    {
+        slug: "cscan-web",
+        title: "Career Support - Candidate Website",
+        description:
+            "Career Support Candidate is an website portal aimed to assist students or the general public in finding job vacancies. This application is also connected to corporate and school portals to provide better support.",
+        techStack: ["Vue JS"],
+        images: ["/projects/cscan-web.png"],
+        liveUrl: "https://cscan.example.com",
+    },
+    {
+        slug: "css-web",
+        title: "Career Support - School Website",
+        description:
+            "\"Career Support School Website\" is a career center portal for schools/universities that manages student/alumni data to be channeled to companies as career support.",
+        techStack: ["Vue JS"],
+        images: ["/projects/css-web.png"],
+        liveUrl: "https://css.example.com",
+    },
+    {
+        slug: "contest-sponsor",
+        title: "Contest APP",
+        description:
+            "Contest app allows users to create and distribute prizes to a wider audience, with two roles: followers/participants and sponsors. It aims to facilitate and expand prize sharing within the community.",
+        techStack: ["Flutter", "Dart", "Firebase", "Bloc", "REST", "Bloc Architecture"],
+        images: ["/projects/contest-sponsor.png"],
+        liveUrl: "https://contest-sponsor.example.com",
+    }
 ];
 
 export const socials: SocialLink[] = [

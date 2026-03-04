@@ -129,9 +129,10 @@ function ImageLightbox({
 interface ProjectImagesProps {
     images: string[];
     alt: string;
+    liveUrl?: string;
 }
 
-export default function ProjectImages({ images, alt }: ProjectImagesProps) {
+export default function ProjectImages({ images, alt, liveUrl }: ProjectImagesProps) {
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
     const openLightbox = useCallback((index: number) => {
@@ -156,25 +157,36 @@ export default function ProjectImages({ images, alt }: ProjectImagesProps) {
 
     return (
         <>
-            <div className="flex gap-1.5 flex-wrap">
+            <div className="flex gap-2">
                 {images.map((src, i) => (
-                    <button
-                        key={i}
-                        onClick={() => openLightbox(i)}
-                        className="group relative w-16 h-16 rounded overflow-hidden
-                     transition-all cursor-pointer shrink-0"
-                    >
-                        <img
-                            src={src}
-                            alt={`${alt} preview ${i + 1}`}
-                            className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-                        />
-                        <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors flex items-center justify-center">
-                            <span className="text-white/60 group-hover:text-white text-[10px] group-hover:scale-110 transition-all">
-                                🔍
-                            </span>
-                        </div>
-                    </button>
+                    <div key={i} className="relative group w-32 sm:w-40 aspect-video shrink-0">
+                        <button
+                            onClick={() => openLightbox(i)}
+                            className="w-full h-full rounded-lg overflow-hidden transition-all cursor-pointer border border-white/10"
+                        >
+                            <img
+                                src={src}
+                                alt={`${alt} preview ${i + 1}`}
+                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                            />
+                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors flex items-center justify-center rounded-lg pointer-events-none">
+                                <span className="text-white/80 group-hover:text-white text-lg group-hover:scale-110 transition-transform">
+                                    🔍
+                                </span>
+                            </div>
+                        </button>
+                        {liveUrl && (
+                            <a
+                                href={liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="absolute -top-2 -right-2 w-7 h-7 bg-accent text-[#0A0A0A] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-10 opacity-0 group-hover:opacity-100"
+                                title="Open Live Project"
+                            >
+                                ↗
+                            </a>
+                        )}
+                    </div>
                 ))}
             </div>
 
