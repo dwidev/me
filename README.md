@@ -6,35 +6,6 @@ A minimalist, high-fidelity portfolio website that replaces traditional UI with 
 
 ---
 
-## ✨ Screenshots
-
-### Welcome Screen
-The terminal boots with a staggered system initialization sequence, then displays an ASCII art banner with clickable shortcut buttons.
-
-![Welcome Screen](docs/screenshots/welcome.png)
-
-### About Command
-Displays profile information, skills, location, and contact details.
-
-![About Command](docs/screenshots/about.png)
-
-### Projects & Help
-Lists all projects with tech stack tags and repo/live links. The `help` command shows all available commands.
-
-![Projects & Help](docs/screenshots/help_and_projects.png)
-
-### Error Handling
-Unrecognized commands show a friendly `zsh: command not found` message with a hint to try `help`.
-
-![Error Handling](docs/screenshots/error_fallback.png)
-
-### Fullscreen Mode
-Click the green traffic light dot to toggle between windowed and fullscreen mode.
-
-![Fullscreen Mode](docs/screenshots/fullscreen.png)
-
----
-
 ## 🚀 Features
 
 - **Boot Sequence** — Staggered `[OK]` system messages with Framer Motion animations
